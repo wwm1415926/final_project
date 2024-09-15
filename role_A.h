@@ -4,7 +4,12 @@
 class Role_A:public MyRole
 {
 public:
-   Role_A(int i,int j,bool enemy,int health,double attack_interval,int cost,QString name);
+    Role_A(int i,int j,bool enemy,int health,int attack,int attack_interval,int cost,QString name);
+    QTimer *timer1;
+    QTimer *timer2;
+    QTimer *timer3;
+    QTimer *timer4;
+    bool attack_cd=false;
    void UpdateState(Game&game)override;
 };
 

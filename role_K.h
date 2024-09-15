@@ -1,11 +1,11 @@
-#ifndef ROLE_G_H
-#define ROLE_G_H
+#ifndef ROLE_K_H
+#define ROLE_K_H
 #include <myRole.h>
-class Role_G : public MyRole
+class Role_K : public MyRole
 {
 public:
     int speed = 1;
-    Role_G(int j, int i = 11, bool enemy = true, int health = 1050, int attack = 150, int attack_interval = 1200, int cost = 0, QString name = "G");
+    Role_K(int j, int i = 11, bool enemy = true, int health = 10000, int attack = 700, int attack_interval = 3000, int cost = 0, QString name = "K");
     QTimer *timer_attacking = new QTimer(this);
     QTimer *timer_attack_interval = new QTimer(this);
     bool attack_cd = false;
@@ -16,4 +16,4 @@ public:
     void SkillEnd() override;
 };
 
-#endif // ROLE_G_H
+#endif // ROLE_K_H

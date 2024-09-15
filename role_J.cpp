@@ -1,9 +1,9 @@
-#include "role_G.h"
+#include "role_J.h"
 
-Role_G::Role_G(int j, int i, bool enemy, int health, int attack, int attack_interval, int cost, QString name)
+Role_J::Role_J(int j, int i, bool enemy, int health, int attack, int attack_interval, int cost, QString name)
     : MyRole(i, j, enemy, health, attack, attack_interval, cost, name){};
 
-void Role_G::UpdateState(Game &game)
+void Role_J::UpdateState(Game &game)
 {
 
     if (this->state == 1)
@@ -38,8 +38,8 @@ void Role_G::UpdateState(Game &game)
     }
 }
 
-void Role_G::SkillBegin() {}
-void Role_G::AttackObject(Game *game)
+void Role_J::SkillBegin(){}
+void Role_J::AttackObject(Game *game)
 {
     MyRole *temp = new MyRole();
     temp->posi = 100;
@@ -55,8 +55,8 @@ void Role_G::AttackObject(Game *game)
             this->Attack_list.append(temp);
         }
     }
-    void Role_G::SkillEnd() {}
-    void Role_G::Attack(QList<MyRole *> Objects, Game * game)
+    void Role_J::SkillEnd() {}
+    void Role_J::Attack(QList<MyRole *> Objects, Game * game)
     {
         this->timer_attacking->start(500);
         for (auto object : Attack_list)

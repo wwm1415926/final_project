@@ -22,19 +22,14 @@ ChooseScene::ChooseScene(QWidget *parent)
     startBtn2->setFixedSize(Button_Size, Button_Size);
     startBtn2->setStyleSheet("QPushButton{image: url(:/res/game2.png)}");
     startBtn2->move(400,300);
+    qDebug("initial_playscene");
     playScene=new PlayScene;
     playScene->game.money=0;
     connect(startBtn1,&QPushButton::clicked,[=](){//进入到游戏界面
         //特效
         startBtn1->zoom1();
         startBtn1->zoom2();
-
-        for(int i=0;i<24;i++){
-            for(int j=0;j<16;j++){
-                playScene->game.RemoveBuilding(GridVec(i,j));
-                playScene->game.GameMap[i][j]="";
-            }
-        }
+        qDebug("initial_games");
         playScene->game.FirstGame();
         //进入游戏界面
         QTimer::singleShot(500,this,[=](){
@@ -52,12 +47,6 @@ ChooseScene::ChooseScene(QWidget *parent)
         //特效
         startBtn2->zoom1();
         startBtn2->zoom2();
-        for(int i=0;i<24;i++){
-            for(int j=0;j<16;j++){
-                playScene->game.RemoveBuilding(GridVec(i,j));
-                playScene->game.GameMap[i][j]="";
-            }
-        }
         playScene->game.SecondGame();
         QTimer::singleShot(500,this,[=](){
             this->hide();

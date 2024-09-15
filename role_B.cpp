@@ -1,11 +1,11 @@
 
 #include "role_B.h"
 
-role_B::role_B(int i,int j,bool enemy=false,int health=1800,int attack_power=900,int attack_interval=2900,int cost=30,QString name="B")
+role_B::role_B(int i,int j,bool enemy,int health,int attack_power,int attack_interval,int cost,QString name)
     :MyRole( i, j, enemy, health, attack_power, attack_interval,cost,name){
     for(int i=1;i<=3;i++)
-        this->Attack_area().append(gridvec(this->posi+i,this->posj));
-    };
+        this->Attack_area.append(gridvec(this->posi+i,this->posj));
+};
 
 void role_B::UpdateState(Game &game)
 {
@@ -41,7 +41,7 @@ void role_B::UpdateState(Game &game)
 void role_B::SkillBegin(Game &game){
     for(int i=this->posi;i<=this->posi+4;i++)
         for(int j=this->posj-1;j<=this->posj+1;j++)
-            this->Attack_area().append(gridvec(i,j));
+            this->Attack_area.append(gridvec(i,j));
     this->temp=this->attack_interval;
     this->attack_interval=1000;
     this->skill_open=true;
@@ -57,14 +57,14 @@ void role_B::SkillBegin(Game &game){
 }
 
 void role_B::SkillEnd(){
-    while(!this->Attack_area().empty())
-        this->Attack_area().pop_back();
+    while(!this->Attack_area.empty())
+        this->Attack_area.pop_back();
     for(int i=1;i<=3;i++)
-        this->Attack_area().append(gridvec(this->posi+i,this->posj));
+        this->Attack_area.append(gridvec(this->posi+i,this->posj));
     this->attack_interval=this->temp;
     if(!this->timer_attackcd.isActive())
     {
-       this->timer_skillcd.stop();
+        this->timer_skillcd.stop();
     }
 }
 
@@ -89,3 +89,4 @@ void role_B::Attack(Game *game){
         }
     }
 }
+

@@ -25,6 +25,10 @@ SOURCES += \
     role_E.cpp \
     role_F.cpp \
     role_G.cpp \
+    role_H.cpp \
+    role_I.cpp \
+    role_J.cpp \
+    role_K.cpp \
     storescene.cpp
 
 HEADERS += \
@@ -44,13 +48,16 @@ HEADERS += \
     role_E.h \
     role_F.h \
     role_G.h \
+    role_H.h \
+    role_I.h \
+    role_J.h \
+    role_K.h \
     storescene.h
 
 FORMS += \
     mainscene.ui
 
-TRANSLATIONS += \
-    final_project_en_150.ts
+TRANSLATIONS +=
 CONFIG += lrelease
 CONFIG += embed_translations
 

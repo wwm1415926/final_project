@@ -1,10 +1,10 @@
 #include "role_E.h"
 
 
-role_E::role_E(int i,int j,bool enemy=false,int health=3500,int attack_power=900,int attack_interval=1600,int cost=25,QString name="E")
+role_E::role_E(int i,int j,bool enemy,int health,int attack_power,int attack_interval,int cost,QString name)
     :MyRole( i, j, enemy, health,attack_power, attack_interval,cost,name){
-        this->Attack_area().append(gridvec(this->posi+1,this->posj));
-    };
+    this->Attack_area.append(gridvec(this->posi+1,this->posj));
+};
 
 void role_E::UpdateState(Game &game)
 {
@@ -57,7 +57,7 @@ void role_E::SkillEnd(){
     this->health+=350;
     if(!this->timer_attackcd.isActive())
     {
-       this->timer_skillcd.stop();
+        this->timer_skillcd.stop();
     }
 }
 

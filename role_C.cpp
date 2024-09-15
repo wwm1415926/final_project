@@ -1,11 +1,11 @@
 #include "role_C.h"
 
 
-role_C::role_C(int i,int j,bool enemy=false,int health=1550,int attack_power=550,int attack_interval=1200,int cost=12,QString name="C")
+role_C::role_C(int i,int j,bool enemy,int health,int attack_power,int attack_interval,int cost,QString name)
     :MyRole( i, j, enemy, health, attack_power,attack_interval,cost,name){
     for(int i=1;i<=4;i++)
-        this->Attack_area().append(gridvec(this->posi+i,this->posj));
-    };
+        this->Attack_area.append(gridvec(this->posi+i,this->posj));
+};
 
 void role_C::UpdateState(Game &game)
 {
@@ -43,7 +43,7 @@ void role_C::SkillBegin(Game &game){
     this->attack_power*=2;
     this->skill_open=true;
 }
-
+void role_C::SkillEnd(){};
 void role_C::Attack(Game *game){
     this->timer_attacking.start(500);
     this->timer_attacking.isSingleShot();
@@ -64,3 +64,4 @@ void role_C::Attack(Game *game){
         }
     }
 }
+

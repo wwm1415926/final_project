@@ -2,7 +2,7 @@
 
 
 
-
+myBullet::myBullet(){}
 myBullet::myBullet(QString name,int x,int y,int attack_power){
     this->name=name;
     this->posx=x;

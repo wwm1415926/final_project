@@ -1,9 +1,9 @@
 #include "role_A.h"
 
-Role_A::Role_A(int i,int j,bool enemy=false,int health=1500,int attack_power=500,int attack_interval=1000,int cost=8,QString name="A")
+Role_A::Role_A(int i,int j,bool enemy,int health,int attack_power,int attack_interval,int cost,QString name)
     :MyRole( i, j, enemy, health, attack_power,attack_interval,cost,name){
-        this->Attack_area().append(gridvec(this->posi+1,this->posj));
-    };
+    this->Attack_area.append(gridvec(this->posi+1,this->posj));
+};
 
 void Role_A::UpdateState(Game &game)
 {
@@ -37,7 +37,7 @@ void Role_A::UpdateState(Game &game)
 }
 
 void Role_A::SkillBegin(Game &game){
-    //this->Attack_area().append(gridvec(this->posi,this->posj+1));
+    //this->Attack_area.append(gridvec(this->posi,this->posj+1));
     this->skill_open=true;
     this->timer_skilling.start(8000);
     this->timer_skilling.isSingleShot();
@@ -79,8 +79,6 @@ void Role_A::Attack(Game *game)
         }
     }
 }
-
-
 
 
 

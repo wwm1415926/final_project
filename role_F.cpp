@@ -1,11 +1,10 @@
-
 #include "role_F.h"
 
-role_F::role_F(int i,int j,bool enemy=false,int health=1650,int attack_power=0,int attack_interval=0,int cost=13,QString name="F")
+role_F::role_F(int i,int j,bool enemy,int health,int attack_power,int attack_interval,int cost,QString name)
     :MyRole( i, j, enemy, health, attack_power, attack_interval,cost,name){
     for(int i=this->posi;i<=this->posi+5;i++)
         for(int j=this->posj-1;j<=this->posj+1;j++)
-            this->Attack_area().append(gridvec(i,j));
+            this->Attack_area.append(gridvec(i,j));
 };
 
 void role_F::UpdateState(Game &game)
@@ -58,10 +57,12 @@ void role_F::SkillBegin(Game &game){
     }
 }
 
-void role_F::SkillEnd(){
-    if(!this->timer_skillcd.isActive())
-    {
-        this->timer_skillcd.stop();
-    }
+void role_F::SkillEnd()
+{
+    ;
 }
 
+void role_F::Attack(Game *game)
+{
+    ;
+}

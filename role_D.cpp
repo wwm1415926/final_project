@@ -1,11 +1,11 @@
 #include "role_D.h"
 
 
-role_D::role_D(int i,int j,bool enemy=false,int health=1700,int attack_power=1000,int attack_interval=2400,int cost=24,QString name="D")
+role_D::role_D(int i,int j,bool enemy,int health,int attack_power,int attack_interval,int cost,QString name)
     :MyRole( i, j, enemy, health,attack_power, attack_interval,cost,name){
     for(int i=1;i<=3;i++)
-        this->Attack_area().append(gridvec(this->posi+i,this->posj));
-    };
+        this->Attack_area.append(gridvec(this->posi+i,this->posj));
+};
 
 void role_D::UpdateState(Game &game)
 {
@@ -53,14 +53,25 @@ void role_D::SkillBegin(Game &game){
     }
 }
 
+void role_D::SkillEnd(){
+    this->attack_power=this->temp;
+    if(!this->timer_attackcd.isActive())
+    {
+        this->timer_skillcd.stop();
+    }
+}
+
 void role_D::Attack(Game *game){
     this->timer_attacking.start(500);
     this->timer_attacking.isSingleShot();
     for (auto object:Attack_list){
         myBullet*temp=new myBullet(this->name,this->posi,this->posj,this->attack_power);
-        myBullet*xuanyun=new myBullet(this->name,this->posi,this->posj,0);
         object->Bullets.append(temp);
-        object->Bullets.append(xuanyun);
+        if(!this->timer_skilling.isActive())
+        {
+            myBullet*xuanyun=new myBullet(this->name,this->posi,this->posj,0);
+            object->Bullets.append(xuanyun);
+        }
     }
     if(!this->timer_attackcd.isActive())
     {

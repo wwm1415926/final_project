@@ -17,29 +17,29 @@ void Role_H::UpdateState(Game &game)
     }
     if (this->state == 2)
     {
-        this->Attack(this->Attack_list, &game);
+        this->Attack(&game);
     }
 
     posx -= speed;
-    posi = (posx - leftwidth) / 100;
+    posi = (posx - Left_Width) / 100;
 
-    this->Attack_area().clear();
-    this->Attack_area().append(gridvec(this->posi, this->posj));
+    this->Attack_area.clear();
+    this->Attack_area.append(gridvec(this->posi, this->posj));
     if (this->posi >= 1)
     {
-        this->Attack_area().append(gridvec(this->posi - 1, this->posj));
+        this->Attack_area.append(gridvec(this->posi - 1, this->posj));
     }
     if (this->posi >= 2)
     {
-        this->Attack_area().append(gridvec(this->posi - 2, this->posj));
+        this->Attack_area.append(gridvec(this->posi - 2, this->posj));
     }
     if (this->posi >= 3)
     {
-        this->Attack_area().append(gridvec(this->posi - 3, this->posj));
+        this->Attack_area.append(gridvec(this->posi - 3, this->posj));
     }
     if (this->posi >= 4)
     {
-        this->Attack_area().append(gridvec(this->posi - 4, this->posj));
+        this->Attack_area.append(gridvec(this->posi - 4, this->posj));
     }
 
     foreach (MyRole *object, game.OurRoles)
@@ -47,9 +47,9 @@ void Role_H::UpdateState(Game &game)
         if (object->posi == this->posi)
         {
             posx += speed;
-            this->Attack_area().clear();
-            this->Attack_area().append(gridvec(this->posi, this->posj));
-            this->Attack_area().append(gridvec(this->posi - 1, this->posj));
+            this->Attack_area.clear();
+            this->Attack_area.append(gridvec(this->posi, this->posj));
+            this->Attack_area.append(gridvec(this->posi - 1, this->posj));
         }
 
         // 根据攻击类型（近战或远程）进行不同的处理
@@ -57,27 +57,11 @@ void Role_H::UpdateState(Game &game)
     }
 }
 
-void Role_H::SkillBegin() {}
-void Role_H::AttackObject(Game *game)
-{
-    MyRole *temp = new MyRole();
-    temp->posi = 100;
-    for (int i = 0; i < game->EnemyRoles.size(); i++)
-    {
-        for (auto area : this->Attack_area())
-        {
-            if (game->EnemyRoles[i]->posj == area.j && game->EnemyRoles[i]->posi == area.j)
-            {
-                if (game->EnemyRoles[i]->posi < temp->posi)
-                    temp = game->EnemyRoles[i];
-            }
-            this->Attack_list.append(temp);
-        }
-    }
-}
+void Role_H::SkillBegin(Game&game) {}
+
 void Role_H::SkillEnd() {}
 
-void Role_H::Attack(QList<MyRole *> Objects)
+void Role_H::Attack(Game *game)
 {
     this->timer_attacking->start(500);
     for (auto object : Attack_list)

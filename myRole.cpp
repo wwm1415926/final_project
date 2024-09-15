@@ -1,7 +1,8 @@
 #include "myRole.h"
 #include<QDebug>
 #include<iostream>
-MyRole::MyRole(int i,int j,bool enemy,int health,int attack_interval,int cost,QString name){
+
+MyRole::MyRole(int i,int j,bool enemy,int health,int attack_power,int attack_interval,int cost,QString name){
     this->posi=i;
     this->posj=j;
     this->enemy=enemy;
@@ -9,6 +10,7 @@ MyRole::MyRole(int i,int j,bool enemy,int health,int attack_interval,int cost,QS
     this->attack_interval=attack_interval;
     this->cost=cost;
     this->name=name;
+    this->attack_power=attack_power;
 }
 
 void MyRole::be_attacked(){
@@ -33,4 +35,21 @@ void MyRole::be_attacked(){
         }
     }
 
+}
+void MyRole::AttackObject(Game *game)
+{
+    MyRole *temp;
+    int distance=9999;
+    for (int i = 0; i < game->EnemyRoles.size(); i++)
+    {
+        for (auto area : this->Attack_area)
+        {
+            if (game->EnemyRoles[i]->posj == area.j && game->EnemyRoles[i]->posi == area.j)
+            {
+                if (game->EnemyRoles[i]->posi < distance)
+                    temp = game->EnemyRoles[i];
+            }
+            if(temp!=NULL)this->Attack_list.append(temp);
+        }
+    }
 }

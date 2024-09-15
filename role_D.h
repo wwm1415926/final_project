@@ -5,7 +5,7 @@
 class role_D:public MyRole
 {
 public:
-    role_D(int i,int j,bool enemy,int health,int attack_power,int attack_interval,int cost,QString name);
+    role_D(int i,int j,bool enemy=false,int health=1700,int attack_power=1000,int attack_interval=2400,int cost=24,QString name="D");
     bool skill_open=false;
     void UpdateState(Game&game)override;
     void Attack(Game *game)override;

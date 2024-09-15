@@ -63,6 +63,7 @@ public:
      * 如果是远程，就要创立bullet对象？
      */
     virtual void Attack(QList<MyRole*>Objects)=0;
+    virtual void be_attacked(Game&game)=0;
 };
 
 

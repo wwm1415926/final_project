@@ -20,8 +20,11 @@ void Role_G::UpdateState(Game &game)
 
     i = (int)posx / 100;
 
-    // 更新角色状态的代码
-    // 例如，根据游戏逻辑更新角色的位置、生命值等
+    foreach (myBullet *bullet, bullets)
+    {
+        bullet->posx++;
+        
+    }
 }
 
 QList<MyRole *> Role_G::AttackObject(int i, int j, bool enemy = 0)
@@ -40,29 +43,43 @@ QList<MyRole *> Role_G::AttackObject(int i, int j, bool enemy = 0)
     }
     return objects;
 }
-void Role_G::be_attacked(int attack_)
+void Role_G::be_attacked_jin(int attack_)
 {
     this->health -= attack_;
-    state = 4;
-    QTimer *timer = new QTimer(this);
-    connect(timer, &QTimer::timeout, this, [=]
-            { state = 1 });
-    timer->start(500);
 }
 
+void Role_G::be_attacked_yuan(myBullet *bullet)
+{
+
+}
+
+/*void Role_G::Attack(QList<MyRole *> Objects) //如果G是远程
+{
+    this->state = 2;
+    myBullet *bullet = new myBullet("G", this->posx, this->posy, this->attack);
+    foreach (MyRole *object_, AttackObject)
+    {
+        object_.be_attacked_yuan(bullet);
+    }
+    QTimer *timer = new QTimer(this);
+    connect(timer, &QTimer::timeout, this, [=]
+            { this->state = 1 });
+    timer->start(1000);
+}
+*/
 void Role_G::Attack(QList<MyRole *> Objects)
 {
     //攻击动画
     // 对范围内所有目标发起攻击
-    state = 2;
-    foreach (MyRole *object, AttackObject)
+    this->state = 2;
+    foreach (MyRole *object_, AttackObject)
     {
-        object_.be_attacked(this->attack);
+        object_.be_attacked_jin(this->attack);
         // 根据攻击类型（近战或远程）进行不同的处理
         // 例如，如果是远程攻击，创建并发射子弹
     }
     QTimer *timer = new QTimer(this);
     connect(timer, &QTimer::timeout, this, [=]
-            { state = 1 });
+            { this->state = 1 });
     timer->start(1000);
 }

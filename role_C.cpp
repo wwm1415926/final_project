@@ -1,0 +1,10 @@
+#include "role_C.h"
+
+
+role_C::role_C(int i,int j,bool enemy,int health,int attack_interval,int cost,QString name)
+    :MyRole( i, j, enemy, health, attack_interval,cost,name){};
+
+
+void role_C::UpdateState(Game&game){
+    return;
+}

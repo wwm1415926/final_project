@@ -1,6 +1,7 @@
 #include "role_G.h"
 
-Role_G::Role_G(int i = 11, int j, bool enemy = 1, int health = 1050, int attack = 150, int attack_interval = 1200, double speed = 1, int cost = 0, QString name = "G")
+Role_G::Role_G(int i = 11, int j, bool enemy = 1, int health = 1050, int attack = 150,
+               int attack_interval = 1200, double speed = 1, int cost = 0, QString name = "G")
 {
     state = 1;
     posx = 1150;

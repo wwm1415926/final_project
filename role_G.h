@@ -6,13 +6,15 @@ class Role_G : public MyRole
 {
 public:
    double posx, posy;
-   Role_G(int i = 11, int j, bool enemy = 1, int health = 1050, int attack = 150, int attack_interval = 1200, double speed = 1, int cost = 0, QString name = "G");
+   Role_G(int i = 11, int j, bool enemy = 1, int health = 1050,
+          int attack = 150, int attack_interval = 1200, double speed = 1, int cost = 0, QString name = "G");
    void UpdateState(Game &game) override;
 
    bool stop();
    /*
     *根据坐标和敌我，确定范围内的攻击对象
     */
+
 
    QList<MyRole *> AttackObject(int i, int j, bool enemy = 0) override;
 

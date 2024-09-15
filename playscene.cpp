@@ -82,7 +82,6 @@ void PlayScene::setupButtons(){
     StoreBtn->setStyleSheet("QPushButton{image: url(:/res/store_button.png)}");
      StoreBtn->move(50,820);
 
-
     SaveBtn = new MyPushButton;
     SaveBtn->setParent(this);
     SaveBtn->setFixedSize(Button_Size/2, Button_Size/2);
@@ -123,32 +122,32 @@ void PlayScene::setupButtons(){
     B_Btn->setParent(this);
     B_Btn->setFixedSize(50, 100);
     B_Btn->setStyleSheet("QPushButton{image: url(:/res/B_0.png)}");
-    B_Btn->move(50,150);
+    B_Btn->move(150,50);
 
     C_Btn = new MyPushButton;
     C_Btn->setParent(this);
     C_Btn->setFixedSize(50,100);
     C_Btn->setStyleSheet("QPushButton{image: url(:/res/C_0.png)}");
-    C_Btn->move(50,250);
+    C_Btn->move(250,50);
 
     D_Btn = new MyPushButton;
     D_Btn->setParent(this);
     D_Btn->setFixedSize(50,100);
     D_Btn->setStyleSheet("QPushButton{image: url(:/res/D_0.png)}");
-    D_Btn->move(50,350);
+    D_Btn->move(350,50);
 
 
     E_Btn = new MyPushButton;
     E_Btn->setParent(this);
     E_Btn->setFixedSize(50,100);
     E_Btn->setStyleSheet("QPushButton{image: url(:/res/E_0.png)}");
-    E_Btn->move(50,450);
+    E_Btn->move(450,50);
 
     F_Btn = new MyPushButton;
     F_Btn->setParent(this);
     F_Btn->setFixedSize(50,100);
     F_Btn->setStyleSheet("QPushButton{image: url(:/res/F_0.png)}");
-    F_Btn->move(50,550);
+    F_Btn->move(550,50);
 
 }
 
@@ -198,6 +197,47 @@ void PlayScene::setupRoles(){
 
             it++;
       }
+    qDebug("our roles has been drew!");
+    for(auto it = game.EnemyRoles.begin(); it != game.EnemyRoles.end();){
+        auto role=*it;
+        QString path=":/res/_.png";
+        path.insert(6,role->name);
+        int ind=path.indexOf('.');
+        if(role->health<=0)role->state=4;
+        path.insert(ind,QString::number(role->state));
+        QPainter painter1(this);
+        QPainter painterline1(this);
+        painterline1.setPen(QPen(Qt::red, 2));
+        QPoint start1=QPoint(role->posx+Left_Width-40,role->posy*Cell_Size+Up_Height+5);
+        QPoint end1=QPoint(role->posx*Cell_Size+Left_Width-40+0.8*role->health,role->posy*Cell_Size+Up_Height+5);
+        painterline1.drawLine(start1,end1);
+        if(role->state==4){
+            painter1.drawPixmap(role->posi *Cell_Size, role->posj*Cell_Size, Cell_Size-20, Cell_Size-20, path);
+            auto temp=role;
+            it = game.EnemyRoles.erase(it);
+            delete temp;
+        }
+
+        if(role->be_attacking){
+            QPixmap pixmap(path);
+            painter1.drawPixmap(role->posi *Cell_Size+Left_Width, role->posj*Cell_Size+Up_Height, Cell_Size-20, Cell_Size-20, path);
+            QPixmap whiteMask(pixmap.size());
+            whiteMask.fill(Qt::white);
+            painter1.setCompositionMode(QPainter::CompositionMode_Plus);
+            painter1.drawPixmap(role->posi *Cell_Size, role->posj*Cell_Size, whiteMask);
+        }
+        else painter1.drawPixmap(role->posi *Cell_Size, role->posj*Cell_Size, Cell_Size-20, Cell_Size-20, path);
+        for(auto bullet:role->Bullets){
+            QString name=bullet->name;
+            QString path_item=":/res/_bullet.png";
+            path_item.insert(6,name);
+            painter1.drawPixmap(bullet->posx,bullet->posy,Cell_Size-20, Cell_Size-20, path_item);
+        }
+
+        it++;
+    }
+
+    qDebug("enemy roles has been drew!");
 }
 
 void PlayScene::setupCells(){
@@ -415,8 +455,9 @@ void PlayScene::EnemyCome(){
                 game.EnemyRoles.append(SelectEnemy);
             }
         }
-        else if(game.enemy_timer.remainingTime()<290000&&game.batch==0){
+        else if(game.enemy_timer.remainingTime()<300000&&game.batch==0){
         game.batch++;
+            qDebug("the enemy coming!");
         for(int i=0;i<10;i++){
             MyRole*SelectEnemy=NULL;
             if(game.EnemyList[3][i]=='G'){
@@ -434,9 +475,11 @@ void PlayScene::EnemyCome(){
             else if(game.EnemyList[3][i]=='K'){
                 SelectEnemy=new Role_K(QRandomGenerator::global()->bounded(6));
             }
+
             game.EnemyRoles.append(SelectEnemy);
         }
     }
+        qDebug("enemy loaded!");
     }
 
 void PlayScene::BeginUpdate()

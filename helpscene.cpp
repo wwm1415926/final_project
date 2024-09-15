@@ -4,7 +4,7 @@
 HelpScene::HelpScene(QWidget *parent)
     : QMainWindow{parent}
 {
-    this->setFixedSize(1200,900);
+    this->setFixedSize(1200,720);
     this->setWindowTitle("帮助界面");
     setupback();
     connect(backBtn,&QPushButton::clicked,[=](){

@@ -59,7 +59,7 @@ void Game::FirstGame(){
     EnemyList[3][7] = 0;  // 填充 0
     EnemyList[3][8] = 0;  // 填充 0
     EnemyList[3][9] = 0;  // 填充 0
-
+    this->batch=0;
     this->round=1;
     enemy_timer.start(300000);
 }

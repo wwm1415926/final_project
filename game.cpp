@@ -13,9 +13,9 @@ void Game::FirstGame(){
     // 创建一个有4行的向量
 
     EnemyList[0] = {'H', 'I', 'H', 'I', 'G', 'G', 'H'};
-    EnemyList[0] = {'H', 'H', 'I', 'I', 'H', 'H', 'G', 'H', 'H'};
-    EnemyList[0]= {'H', 'I', 'J', 'H', 'H', 'G', 'G', 'H'};
-    EnemyList[0] = {'J', 'J', 'H', 'H', 'J', 'J', 'H'};
+    EnemyList[1] = {'H', 'H', 'I', 'I', 'H', 'H', 'G', 'H', 'H'};
+    EnemyList[2]= {'H', 'I', 'J', 'H', 'H', 'G', 'G', 'H'};
+    EnemyList[3] = {'J', 'J', 'H', 'H', 'J', 'J', 'H'};
     this->round=1;
     enemy_timer.start(300000);
 }

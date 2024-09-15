@@ -21,6 +21,7 @@
 #include <QMessageBox>
 #include <QDataStream>
 #include <QProcess>
+#include<QRandomGenerator>
 class Game;
 class PlayScene : public QMainWindow
 {

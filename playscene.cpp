@@ -232,7 +232,7 @@ void PlayScene::mouseDoubleClickEvent (QMouseEvent *event) {
     int click_y = event->pos().y();
     if (event->button() == Qt::LeftButton) {
         MyRole*role=game.GetRole(GridVec((click_x-Left_Width)/Cell_Size,(click_y-Up_Height)/Cell_Size));
-        if(!role->timer1.isActive()){
+        if(!role->timer.isActive()){
             role->state=3;
         }
 }
@@ -248,10 +248,96 @@ void PlayScene::mouseMoveEvent(QMouseEvent *event)
     }
 }
 void PlayScene::EnemyCome(){
-    if(game.enemy_timer.remainingTime()<290000){
-        for(int i=0;i<game.)
+    if(game.enemy_timer.remainingTime()<75000&&game.batch==3){
+        game.batch++;
+        for(int i=0;i<game.EnemyList[3].size();i++){
+            MyRole*SelectEnemy;
+            if(game.EnemyList[3][i]=='G'){
+                SelectEnemy=new role_G(QRandomGenerator::global()->bounded(6));
+            }
+            else if(game.EnemyList[3][i]=='H'){
+                SelectEnemy=new role_H(QRandomGenerator::global()->bounded(6));
+            }
+            else if(game.EnemyList[3][i]=='I'){
+                SelectEnemy=new role_I(QRandomGenerator::global()->bounded(6));
+            }
+            else if(game.EnemyList[3][i]=='J'){
+                SelectEnemy=new role_J(QRandomGenerator::global()->bounded(6));
+            }
+            else if(game.EnemyList[3][i]=='K'){
+                SelectEnemy=new role_K(QRandomGenerator::global()->bounded(6));
+            }
+            game.EnemyRoles.append(SelectEnemy);
+            }
+
+        }
+    else if(game.enemy_timer.remainingTime()<150000&&game.batch==2){
+        game.batch++;
+        for(int i=0;i<game.EnemyList[2].size();i++){
+            MyRole*SelectEnemy;
+            if(game.EnemyList[2][i]=='G'){
+                SelectEnemy=new role_G(QRandomGenerator::global()->bounded(6));
+            }
+            else if(game.EnemyList[2][i]=='H'){
+                SelectEnemy=new role_H(QRandomGenerator::global()->bounded(6));
+            }
+            else if(game.EnemyList[2][i]=='I'){
+                SelectEnemy=new role_I(QRandomGenerator::global()->bounded(6));
+            }
+            else if(game.EnemyList[2][i]=='J'){
+                SelectEnemy=new role_J(QRandomGenerator::global()->bounded(6));
+            }
+            else if(game.EnemyList[2][i]=='K'){
+                SelectEnemy=new role_K(QRandomGenerator::global()->bounded(6));
+            }
+            game.EnemyRoles.append(SelectEnemy);
+        }
     }
-}
+        else if(game.enemy_timer.remainingTime()<225000&&game.batch==1){
+            for(int i=0;i<game.EnemyList[1].size();i++){
+                MyRole*SelectEnemy;
+                if(game.EnemyList[1][i]=='G'){
+                    SelectEnemy=new role_G(QRandomGenerator::global()->bounded(6));
+                }
+                else if(game.EnemyList[1][i]=='H'){
+                    SelectEnemy=new role_H(QRandomGenerator::global()->bounded(6));
+                }
+                else if(game.EnemyList[1][i]=='I'){
+                    SelectEnemy=new role_I(QRandomGenerator::global()->bounded(6));
+                }
+                else if(game.EnemyList[1][i]=='J'){
+                    SelectEnemy=new role_J(QRandomGenerator::global()->bounded(6));
+                }
+                else if(game.EnemyList[1][i]=='K'){
+                    SelectEnemy=new role_K(QRandomGenerator::global()->bounded(6));
+                }
+                game.EnemyRoles.append(SelectEnemy);
+            }
+        }
+        else if(game.enemy_timer.remainingTime()<290000&&game.batch==0){
+        game.batch++;
+        for(int i=0;i<game.EnemyList[3].size();i++){
+            MyRole*SelectEnemy;
+            if(game.EnemyList[3][i]=='G'){
+                SelectEnemy=new role_G(QRandomGenerator::global()->bounded(6));
+            }
+            else if(game.EnemyList[3][i]=='H'){
+                SelectEnemy=new role_H(QRandomGenerator::global()->bounded(6));
+            }
+            else if(game.EnemyList[3][i]=='I'){
+                SelectEnemy=new role_I(QRandomGenerator::global()->bounded(6));
+            }
+            else if(game.EnemyList[3][i]=='J'){
+                SelectEnemy=new role_J(QRandomGenerator::global()->bounded(6));
+            }
+            else if(game.EnemyList[3][i]=='K'){
+                SelectEnemy=new role_K(QRandomGenerator::global()->bounded(6));
+            }
+            game.EnemyRoles.append(SelectEnemy);
+        }
+    }
+    }
+
 void PlayScene::BeginUpdate()
 {//工厂开始动
     timer.start(50);

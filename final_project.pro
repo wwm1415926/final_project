@@ -23,6 +23,7 @@ SOURCES += \
     role_C.cpp \
     role_D.cpp \
     role_E.cpp \
+    role_G.cpp \
     storescene.cpp
 
 HEADERS += \
@@ -40,6 +41,7 @@ HEADERS += \
     role_C.h \
     role_D.h \
     role_E.h \
+    role_G.h \
     storescene.h
 
 FORMS += \

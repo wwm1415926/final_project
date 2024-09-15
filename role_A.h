@@ -9,10 +9,10 @@ public:
     QTimer *timer_attack_interval=new QTimer(this);
     bool attack_cd=false;
     void UpdateState(Game&game)override;
-    QList<MyRole*>AttackObject(int i,int j,bool enemy)override;
-    void AttackObject2(Game &game)override;
-    void Attack(QList<MyRole*>Objects,Game &game)override;
-    QList<MyRole*>Attack_list;
+    void AttackObject(Game*game)override;
+    void Attack(QList<MyRole*>Objects,Game *game)override;
+    void SkillBegin() override;
+    void SkillEnd()override;
 };
 
 #endif // ROLE_A_H

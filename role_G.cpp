@@ -1,8 +1,10 @@
 #include "role_G.h"
 
-Role_G::Role_G(int i = 11, int j, bool enemy = 1, int health = 1050, int attack = 150,
-               int attack_interval = 1200, double speed = 1, int cost = 0, QString name = "G")
+Role_G::Role_G(int j,int i = 11, bool enemy = 1, int health = 1050, int attack = 150,
+               int attack_interval = 1200, int  spd = 1, int cost = 0, QString name = "G"):
+MyRole( i, j, enemy, health, attack,attack_interval,cost,name)
 {
+    this->spd=spd;
     state = 1;
     posx = 1150;
     posy = 50 + j * 100;
@@ -10,32 +12,31 @@ Role_G::Role_G(int i = 11, int j, bool enemy = 1, int health = 1050, int attack 
 
 void Role_G::UpdateState(Game &game)
 {
-    posx -= speed;
+
     foreach (MyRole *object, game.OurRoles)
     {
-        if (object->i == this->i)
-            posx += speed;
+        if (object->posi == this->posi)
+            posx += spd;
         // 根据攻击类型（近战或远程）进行不同的处理
         // 例如，如果是远程攻击，创建并发射子弹
     }
-
-    i = (int)posx / 100;
+    posx -= spd;
+    posi = (posx-Left_Width) / 100;
 
     foreach (myBullet *bullet, bullets)
     {
         bullet->posx++;
-        
     }
 }
 
-QList<MyRole *> Role_G::AttackObject(int i, int j, bool enemy = 0)
+QList<MyRole *> Role_G::AttackObject(int i, int j, bool enemy = 0,Game game)
 {
     // 确定攻击对象并返回一个角色列表
     QList<MyRole *> objects;
     // 根据游戏逻辑确定攻击对象并添加到列表中
     foreach (MyRole *object, game.OurRoles)
     {
-        if (object->i == this->i)
+        if (object->posi == this->posi)
         {
             objects.append(object);
         }
@@ -44,12 +45,12 @@ QList<MyRole *> Role_G::AttackObject(int i, int j, bool enemy = 0)
     }
     return objects;
 }
-void Role_G::be_attacked_jin(int attack_)
+void Role_G::be_attacked_near(int attack_)
 {
     this->health -= attack_;
 }
 
-void Role_G::be_attacked_yuan(myBullet *bullet)
+void Role_G::be_attacked_far(myBullet *bullet)
 {
 
 }
@@ -75,7 +76,7 @@ void Role_G::Attack(QList<MyRole *> Objects)
     this->state = 2;
     foreach (MyRole *object_, AttackObject)
     {
-        object_.be_attacked_jin(this->attack);
+        object_.be_attacked_naer(this->attack);
         // 根据攻击类型（近战或远程）进行不同的处理
         // 例如，如果是远程攻击，创建并发射子弹
     }

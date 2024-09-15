@@ -5,9 +5,10 @@
 class Role_G : public MyRole
 {
 public:
-   double posx, posy;
-   Role_G(int i = 11, int j, bool enemy = 1, int health = 1050,
-          int attack = 150, int attack_interval = 1200, double speed = 1, int cost = 0, QString name = "G");
+    int posx, posy;
+    int spd;
+   Role_G(int j,int i, bool enemy, int health ,
+          int attack , int attack_interval, int  spd, int cost, QString name );
    void UpdateState(Game &game) override;
 
    bool stop();
@@ -16,7 +17,7 @@ public:
     */
 
 
-   QList<MyRole *> AttackObject(int i, int j, bool enemy = 0) override;
+   QList<MyRole *> AttackObject(int i, int j, bool enemy = 0,Game *game) override;
 
    /*
     * 对范围内所有目标发起攻击;如果是近战就改变显示形态并让目标内的敌人频闪一下
@@ -24,7 +25,10 @@ public:
     */
    void Attack(QList<MyRole *> Objects) override;
 
-   void be_attacked(int) override;
+   void be_attacked_near(int);
+   void be_attacked_far(myBullet*);
+
+
 };
 
 #endif // ROLE_G_H

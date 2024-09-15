@@ -21,24 +21,27 @@ public:
      *角色性质参数
      */
     int posi,posj;//坐标
+    int posx,posy;
     bool enemy;//敌我角色
     int health,cost;
     double spd;
     QString name;//名称
     int state;//工作状态,1表示初始，2表示攻击态，3表示技能态,
     QTimer timer_attackcd,timer_attacking,timer_skillcd,timer_skilling;
-    QList<myBullet*>bullets;
+    QList<myBullet*>Bullets;
 
         /*
          * 攻击相关
          */
         int attack_interval;
+        int attack_power;
+        bool be_attacking;
 
     MyRole();
     /*
      *构造函数
      */
-    MyRole(int i, int j, bool enemy, int health, int attack, int attack_interval, double spd, int cost, QString name);
+    MyRole(int i, int j, bool enemy, int health, int attack, int attack_interval, int cost, QString name);
 
     /*
      *判断角色是否相同
@@ -57,14 +60,19 @@ public:
     /*
      *根据坐标和敌我，确定范围内的攻击对象
      */
-    virtual QList<MyRole *> AttackObject(int i, int j, bool enemy) = 0;
+    virtual void  AttackObject(Game*game) = 0;
 
     /*
      * 对范围内所有目标发起攻击;如果是近战就改变显示形态并让目标内的敌人频闪一下
      * 如果是远程，就要创立bullet对象？
      */
-    virtual void Attack(QList<MyRole *> Objects) = 0;
-    virtual void be_attacked(Game &game, int attack) = 0;
+    virtual void Attack(QList<MyRole *> Objects,Game *game) = 0;
+    virtual void SkillBegin()=0;
+    virtual void SkillEnd()=0;
+    QList<GridVec> Attack_area();
+    QList<MyRole*>Attack_list;
+
+    void be_attacked();
 };
 
 /*

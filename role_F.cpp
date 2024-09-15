@@ -49,17 +49,19 @@ void role_F::SkillBegin(Game &game){
     }
     this->timer_skilling.start(15000);
     this->timer_skilling.isSingleShot();
-    connect(this->timer_skilling,&QTimer::timeout,this,[=]{
+    if(!this->timer_skilling.isActive())
+    {
         this->timer_skilling.stop();
         this->skill_open=false;
         this->timer_skillcd.start(20000);
         this->timer_attackcd.isSingleShot();
-    });
+    }
 }
 
 void role_F::SkillEnd(){
-    connect(this->timer_skillcd,&QTimer::timeout,this,[=]{
+    if(!this->timer_skillcd.isActive())
+    {
         this->timer_skillcd.stop();
-    });
+    }
 }
 

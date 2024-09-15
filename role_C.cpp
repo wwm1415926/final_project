@@ -51,7 +51,8 @@ void role_C::Attack(Game *game){
         myBullet*temp=new myBullet(this->name,this->posi,this->posj,this->attack_power);
         object->Bullets.append(temp);
     }
-    connect(this->timer_attacking,&QTimer::timeout,this,[=]{
+    if(!this->timer_attackcd.isActive())
+    {
         timer_attacking.stop();
         if(this->timer_skilling.isActive())this->state=3;
         this->state=1;
@@ -61,5 +62,5 @@ void role_C::Attack(Game *game){
             object->be_attacking=false;
             Attack_list.pop_back();
         }
-    });
+    }
 }

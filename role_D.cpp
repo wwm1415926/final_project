@@ -44,12 +44,13 @@ void role_D::SkillBegin(Game &game){
     this->skill_open=true;
     this->timer_skilling.start(10000);
     this->timer_skilling.isSingleShot();
-    connect(this->timer_skilling,&QTimer::timeout,this,[=]{
+    if(!this->timer_skilling.isActive())
+    {
         this->timer_skilling.stop();
         this->skill_open=false;
         this->timer_skillcd.start(20000);
         this->timer_attackcd.isSingleShot();
-    });
+    }
 }
 
 void role_D::Attack(Game *game){
@@ -61,7 +62,8 @@ void role_D::Attack(Game *game){
         object->Bullets.append(temp);
         object->Bullets.append(xuanyun);
     }
-    connect(this->timer_attacking,&QTimer::timeout,this,[=]{
+    if(!this->timer_attackcd.isActive())
+    {
         timer_attacking.stop();
         if(this->timer_skilling.isActive())this->state=3;
         this->state=1;
@@ -71,5 +73,5 @@ void role_D::Attack(Game *game){
             object->be_attacking=false;
             Attack_list.pop_back();
         }
-    });
+    }
 }

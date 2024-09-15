@@ -43,20 +43,22 @@ void role_E::SkillBegin(Game &game){
     this->health=4000;
     this->timer_skilling.start(15000);
     this->timer_skilling.isSingleShot();
-    connect(this->timer_skilling,&QTimer::timeout,this,[=]{
+    if(!this->timer_skilling.isActive())
+    {
         this->timer_skilling.stop();
         this->skill_open=false;
         this->timer_skillcd.start(20000);
         this->timer_attackcd.isSingleShot();
-    });
+    }
 }
 
 void role_E::SkillEnd(){
     this->health=3500*(this->health/4000);
     this->health+=350;
-    connect(this->timer_skillcd,&QTimer::timeout,this,[=]{
-        this->timer_skillcd.stop();
-    });
+    if(!this->timer_attackcd.isActive())
+    {
+       this->timer_skillcd.stop();
+    }
 }
 
 void role_E::Attack(Game *game)
@@ -67,7 +69,8 @@ void role_E::Attack(Game *game)
         object->be_attacking=true;
         object->health-=this->attack_power;
     }
-    connect(timer_attacking,&QTimer::timeout,this,[=]{
+    if(!this->timer_attackcd.isActive())
+    {
         this->timer_attacking.stop();
         if(this->timer_skilling.isActive())this->state=3;
         this->state=1;
@@ -77,5 +80,5 @@ void role_E::Attack(Game *game)
             object->be_attacking=false;
             Attack_list.pop_back();
         }
-    });
+    }
 }

@@ -47,12 +47,13 @@ void role_B::SkillBegin(Game &game){
     this->skill_open=true;
     this->timer_skilling.start(15000);
     this->timer_skilling.isSingleShot();
-    connect(this->timer_skilling,&QTimer::timeout,this,[=]{
+    if(!this->timer_skilling.isActive())
+    {
         this->timer_skilling.stop();
         this->skill_open=false;
         this->timer_skillcd.start(20000);
         this->timer_attackcd.isSingleShot();
-    });
+    }
 }
 
 void role_B::SkillEnd(){
@@ -61,9 +62,10 @@ void role_B::SkillEnd(){
     for(int i=1;i<=3;i++)
         this->Attack_area().append(gridvec(this->posi+i,this->posj));
     this->attack_interval=this->temp;
-    connect(this->timer_skillcd,&QTimer::timeout,this,[=]{
-        this->timer_skillcd.stop();
-    });
+    if(!this->timer_attackcd.isActive())
+    {
+       this->timer_skillcd.stop();
+    }
 }
 
 
@@ -74,7 +76,8 @@ void role_B::Attack(Game *game){
         myBullet*temp=new myBullet(this->name,this->posi,this->posj,this->attack_power);
         object->Bullets.append(temp);
     }
-    connect(this->timer_attacking,&QTimer::timeout,this,[=]{
+    if(!this->timer_attackcd.isActive())
+    {
         timer_attacking.stop();
         if(this->timer_skilling.isActive())this->state=3;
         this->state=1;
@@ -84,5 +87,5 @@ void role_B::Attack(Game *game){
             object->be_attacking=false;
             Attack_list.pop_back();
         }
-    });
+    }
 }

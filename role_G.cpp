@@ -55,24 +55,26 @@ void Role_G::AttackObject(Game *game)
             this->Attack_list.append(temp);
         }
     }
-    void Role_G::SkillEnd() {}
-    void Role_G::Attack(QList<MyRole *> Objects, Game * game)
+}
+void Role_G::SkillEnd() {}
+void Role_G::Attack(QList<MyRole *> Objects, Game *game)
+{
+    this->timer_attacking->start(500);
+    for (auto object : Attack_list)
     {
-        this->timer_attacking->start(500);
+        object->be_attacking = true;
+        object->health -= this->attack_power;
+    }
+
+    connect(timer_attacking, &QTimer::timeout, this, [=]
+    {
+        timer_attacking->stop();
+        this->state = 1;
+        timer_attack_interval->start(this->attack_interval);
         for (auto object : Attack_list)
         {
-            object->be_attacking = true;
-            object->health -= this->attack_power;
+            object->be_attacking = false;
+            Attack_list.pop_back();
         }
-        connect(timer_attacking, &QTimer::timeout, this, [=]
-                {
-            timer_attacking->stop();
-            this->state = 1;
-            timer_attack_interval->start(this->attack_interval);
-            for (auto object : Attack_list)
-            {
-                object->be_attacking = false;
-                Attack_list.pop_back();
-            } });
-    }
+    });
 }

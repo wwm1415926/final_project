@@ -15,6 +15,7 @@ SOURCES += \
     main.cpp \
     mainscene.cpp \
     myRole.cpp \
+    mybullet.cpp \
     mypushbutton.cpp \
     playscene.cpp \
     role_A.cpp \
@@ -31,6 +32,7 @@ HEADERS += \
     helpscene.h \
     mainscene.h \
     myRole.h \
+    mybullet.h \
     mypushbutton.h \
     playscene.h \
     role_A.h \

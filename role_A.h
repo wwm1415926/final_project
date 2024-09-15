@@ -4,14 +4,11 @@
 class Role_A:public MyRole
 {
 public:
-    Role_A(int i,int j,bool enemy,int health,int attack,int attack_interval,int cost,QString name);
-    QTimer *timer_attacking=new QTimer(this);
-    QTimer *timer_attack_interval=new QTimer(this);
-    bool attack_cd=false;
+    Role_A(int i,int j,bool enemy,int health,int attack_power,int attack_interval,int cost,QString name);
+    bool skill_open=false;
     void UpdateState(Game&game)override;
-    void AttackObject(Game*game)override;
-    void Attack(QList<MyRole*>Objects,Game *game)override;
-    void SkillBegin() override;
+    void Attack(Game *game)override;
+    void SkillBegin(Game &game) override;
     void SkillEnd()override;
 };
 

@@ -12,22 +12,24 @@ MyRole::MyRole(int i,int j,bool enemy,int health,int attack_interval,int cost,QS
 }
 
 void MyRole::be_attacked(){
-    for(auto bullet:this->bullets){
+    for(auto bullet:this->Bullets){
         if(this->enemy){
             if(bullet->posx>=(this->posx-20)){
                 this->health-=bullet->attack_power;
                 myBullet*temp=bullet;
-                this->bullets.pop_back();
+                this->Bullets.pop_back();
                 delete temp;
             }
+            else bullet->posx+=5;
         }
         else{
             if(bullet->posx<=(this->posx+20)){
                 this->health-=bullet->attack_power;
                 myBullet*temp=bullet;
-                this->bullets.pop_back();
+                this->Bullets.pop_back();
                 delete temp;
             }
+            else bullet->posy+=5;
         }
     }
 

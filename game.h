@@ -66,8 +66,8 @@ public:
      * 对范围内所有目标发起攻击;如果是近战就改变显示形态并让目标内的敌人频闪一下
      * 如果是远程，就要创立bullet对象？
      */
-    virtual void Attack(QList<MyRole *> Objects,Game *game) = 0;
-    virtual void SkillBegin()=0;
+    virtual void Attack(Game *game) = 0;
+    virtual void SkillBegin(Game &game)=0;
     virtual void SkillEnd()=0;
     QList<GridVec> Attack_area();
     QList<MyRole*>Attack_list;

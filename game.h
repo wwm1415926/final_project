@@ -37,7 +37,7 @@ public:
     /*
      *构造函数
      */
-    MyRole(int i, int j, bool enemy, int health, int attack, int attack_interval, int speed, int cost, QString name);
+    MyRole(int i, int j, bool enemy, int health, int attack, int attack_interval, double speed, int cost, QString name);
 
     /*
      *判断角色是否相同

@@ -7,9 +7,12 @@ class myBullet : public QObject
 {
     Q_OBJECT
 public:
-    explicit myBullet(QObject *parent = nullptr);
-
-signals:
+    int posx;
+    int posy;
+    QString name;
+    myBullet();
+    myBullet(QString name,int x,int y,int attack_power);
+    int attack_power;
 };
 
 #endif // MYBULLET_H

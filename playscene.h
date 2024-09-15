@@ -10,7 +10,6 @@
 #include<mypushbutton.h>
 #include<QPainter>
 #include<QMouseEvent>
-#include<role_E.h>
 #include<role_C.h>
 #include<role_B.h>
 #include<role_A.h>
@@ -33,8 +32,7 @@ public:
      */
 
     void setupButtons();//初始化游戏界面按钮
-    void setupFixedBuildings();//建立固定建筑
-    void setupBuildings();//建立玩家放置建筑
+    void setupRoles();//建立玩家放置建筑
     void setupBlueBuilding();//建立蓝色覆盖层
     void setupCells();//建立方格
     void setupItems();//建立建筑物上的物体
@@ -59,6 +57,7 @@ public:
     GridVec SelectPos;//鼠标位置
     int Selecth,Selectw;
     int Select_X,Select_Y;//建筑物固定的方格和坐标
+    QTimer enemy_timer;
 
 
     /*
@@ -72,10 +71,11 @@ public:
      */
     void paintEvent(QPaintEvent *event) override;
     void mouseMoveEvent(QMouseEvent *event)override;
+    void mouseDoubleClickEvent(QMouseEvent *event) override;
     using QMainWindow::mousePressEvent;
     void mousePressEvent(QMouseEvent *event)override;
     void keyPressEvent(QKeyEvent *event)override;
-
+    void EnemyCome();
 
     /*
      * 用于控制游戏画面的刷新

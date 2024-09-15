@@ -5,7 +5,7 @@
 #include<grid.h>
 #include<QPushButton>
 #include<QTimer>
-
+#include<mybullet.h>
 class Item;
 class Game;
 
@@ -23,9 +23,9 @@ public:
     bool enemy;//敌我角色
     int health,cost;
     QString name;//名称
-    int state;//工作状态,1表示初始，2表示攻击态，3表示技能态
-    QTimer timer;//技能cd时间
-    Bullet*bullet
+    int state;//工作状态,1表示初始，2表示攻击态，3表示技能态,
+    QTimer timer_attacking,timer_interval;
+    QList<myBullet*>bullets;
 
     /*
      * 攻击相关
@@ -81,7 +81,7 @@ public:
     /*
      *，记录第几波等游玩参数
      */
-
+    QTimer enemy_timer;
     int batch;//当前剩余批次数
     int round;//当前关次
     int money;//当前部署点
@@ -114,6 +114,7 @@ public:
      */
     void RemoveRole(GridVec pos);
 
+    QVector<QVector<char>> enemyList(4) ;
 
 };
 

@@ -3,6 +3,10 @@
 Role_A::Role_A(int i,int j,bool enemy,int health,int attack_power,int attack_interval,int cost,QString name)
     :MyRole( i, j, enemy, health, attack_power,attack_interval,cost,name){
     this->Attack_area.append(gridvec(this->posi+1,this->posj));
+    this->state=1;
+    this->be_attacking=false;
+    this->timer_attackcd.start(this->attack_interval);
+    this->timer_skillcd.start(15000);
 };
 
 void Role_A::UpdateState(Game &game)
@@ -12,8 +16,10 @@ void Role_A::UpdateState(Game &game)
     {
         if(!this->timer_attackcd.isActive())
         {
+            qDebug()<<"line 17";
             this->AttackObject(&game);
-            this->state=2;
+           if(!this->Attack_list.empty()) this->state=2;
+           qDebug()<<"line 20";
         }
         this->be_attacked();
     }

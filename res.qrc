@@ -132,5 +132,7 @@
         <file>res/trash_D.png</file>
         <file>res/trash_S.png</file>
         <file>res/trash_W.png</file>
+        <file>res/A_blue.png</file>
+        <file>res/B_blue.png</file>
     </qresource>
 </RCC>

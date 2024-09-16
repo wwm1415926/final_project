@@ -1,7 +1,12 @@
 #include "role_K.h"
 
 Role_K::Role_K(int j, int i, bool enemy, int health, int attack, int attack_interval, int cost, QString name)
-    : MyRole(i, j, enemy, health, attack, attack_interval, cost, name){};
+    : MyRole(i, j, enemy, health, attack, attack_interval, cost, name){
+    this->posx=Left_Width+posi*Cell_Size;
+    this->posy=Up_Height+posj*Cell_Size;
+    this->state=1;
+    this->be_attacking=false;
+    };
 
 void Role_K::UpdateState(Game &game)
 {

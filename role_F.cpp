@@ -2,6 +2,8 @@
 
 role_F::role_F(int i,int j,bool enemy,int health,int attack_power,int attack_interval,int cost,QString name)
     :MyRole( i, j, enemy, health, attack_power, attack_interval,cost,name){
+    this->state=1;
+    this->be_attacking=false;
     for(int i=this->posi;i<=this->posi+5;i++)
         for(int j=this->posj-1;j<=this->posj+1;j++)
             this->Attack_area.append(gridvec(i,j));

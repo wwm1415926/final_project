@@ -61,6 +61,7 @@ void Game::FirstGame(){
     EnemyList[3][9] = 0;  // 填充 0
     this->batch=0;
     this->round=1;
+    this->money=999;
     enemy_timer.start(300000);
 }
 void Game::SecondGame(){

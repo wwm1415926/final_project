@@ -1,7 +1,13 @@
 #include "role_H.h"
 
 Role_H::Role_H(int j, int i, bool enemy, int health, int attack, int attack_interval, int cost, QString name)
-    : MyRole(i, j, enemy, health, attack, attack_interval, cost, name){};
+    : MyRole(i, j, enemy, health, attack, attack_interval, cost, name){
+    qDebug()<<"Role H"<<posi<<posj;
+    this->posx=Left_Width+posi*Cell_Size;
+    this->posy=Up_Height+posj*Cell_Size;
+    this->state=1;
+    this->be_attacking=false;
+    };
 
 void Role_H::UpdateState(Game &game)
 {
@@ -11,7 +17,7 @@ void Role_H::UpdateState(Game &game)
         if (!timer_attack_interval->isActive())
         {
             this->AttackObject(&game);
-            this->state = 2;
+            this->state =1;
         }
         this->be_attacked();
     }
@@ -19,9 +25,8 @@ void Role_H::UpdateState(Game &game)
     {
         this->Attack(&game);
     }
-
     posx -= speed;
-    posi = (posx - Left_Width) / 100;
+    posi = (posx - Left_Width) /Cell_Size;
 
     this->Attack_area.clear();
     this->Attack_area.append(gridvec(this->posi, this->posj));
@@ -41,7 +46,6 @@ void Role_H::UpdateState(Game &game)
     {
         this->Attack_area.append(gridvec(this->posi - 4, this->posj));
     }
-
     foreach (MyRole *object, game.OurRoles)
     {
         if (object->posi == this->posi)

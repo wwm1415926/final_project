@@ -5,6 +5,8 @@ role_C::role_C(int i,int j,bool enemy,int health,int attack_power,int attack_int
     :MyRole( i, j, enemy, health, attack_power,attack_interval,cost,name){
     for(int i=1;i<=4;i++)
         this->Attack_area.append(gridvec(this->posi+i,this->posj));
+    this->state=1;
+    this->be_attacking=false;
 };
 
 void role_C::UpdateState(Game &game)

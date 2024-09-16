@@ -5,6 +5,10 @@ role_B::role_B(int i,int j,bool enemy,int health,int attack_power,int attack_int
     :MyRole( i, j, enemy, health, attack_power, attack_interval,cost,name){
     for(int i=1;i<=3;i++)
         this->Attack_area.append(gridvec(this->posi+i,this->posj));
+    this->state=1;
+    this->be_attacking=false;
+    this->timer_attackcd.start(this->attack_interval);
+    this->timer_skillcd.start(20000);
 };
 
 void role_B::UpdateState(Game &game)

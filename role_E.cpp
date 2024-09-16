@@ -4,6 +4,8 @@
 role_E::role_E(int i,int j,bool enemy,int health,int attack_power,int attack_interval,int cost,QString name)
     :MyRole( i, j, enemy, health,attack_power, attack_interval,cost,name){
     this->Attack_area.append(gridvec(this->posi+1,this->posj));
+    this->state=1;
+    this->be_attacking=false;
 };
 
 void role_E::UpdateState(Game &game)

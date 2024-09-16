@@ -21,23 +21,25 @@ void Role_G::UpdateState(Game &game)
     }
 
     posx -= speed;
-    posi = (posx - Left_Width) / 100;
+    posi = posx / 100;
     this->Attack_area.clear();
+    bool flag = false;
 
     foreach (MyRole *object, game.OurRoles)
     {
         if (object->posi == this->posi)
         {
-            posx += speed;
-            this->Attack_area.append(GridVec(this->posi, this->posj));
-            this->Attack_area.append(GridVec(this->posi - 1, this->posj));
+            flag = true;
         }
 
         // 根据攻击类型（近战或远程）进行不同的处理
         // 例如，如果是远程攻击，创建并发射子弹
     }
+    if (flag){
+        posx += speed;
+        this->Attack_area.append(GridVec(this->posi, this->posj));
+    }
 }
-
 void Role_G::SkillBegin(Game&game) {}
 
 void Role_G::SkillEnd() {}

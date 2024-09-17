@@ -11,7 +11,7 @@ MainScene::MainScene(QWidget *parent):
 {
     ui->setupUi(this);
     //配置主要场景
-    setFixedSize(800,600);
+    setFixedSize(1200,720);
     setWindowTitle("xx大战xx");
     chooseScene=new ChooseScene;
 }
@@ -22,8 +22,6 @@ void MainScene::paintEvent(QPaintEvent*){
     QPixmap pix;
      pix.load(":/res/main_background.png");
     painter.drawPixmap(0,0,this->width(),this->height(),pix);
-     QImage background1(":/res/logo.png");
-     painter.drawImage(QRect(0,400, 800, 180),background1);
      //画背景上图标
     pix.load(":res/start.png");
     pix=pix.scaled(pix.width()*0.2,pix.height()*0.2);

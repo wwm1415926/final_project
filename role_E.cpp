@@ -4,8 +4,14 @@
 role_E::role_E(int i,int j,bool enemy,int health,int attack_power,int attack_interval,int cost,QString name)
     :MyRole( i, j, enemy, health,attack_power, attack_interval,cost,name){
     this->Attack_area.append(gridvec(this->posi+1,this->posj));
+     this->Attack_area.append(gridvec(this->posi,this->posj));
     this->state=1;
     this->be_attacking=false;
+    this->timer_attackcd.start(this->attack_interval);
+    this->timer_attackcd.setSingleShot(true);
+    this->timer_skillcd.start(20000);
+    this->timer_skillcd.setSingleShot(true);
+    this->is_attacking=false;
 };
 
 void role_E::UpdateState(Game &game)
@@ -16,7 +22,8 @@ void role_E::UpdateState(Game &game)
         if(!this->timer_attackcd.isActive())
         {
             this->AttackObject(&game);
-            this->state=2;
+            if(!this->Attack_list.empty())
+                this->state=2;
         }
         this->be_attacked();
     }
@@ -26,15 +33,12 @@ void role_E::UpdateState(Game &game)
     if(this->state==3){
         if(!this->timer_skillcd.isActive())
         {
-            if(this->skill_open==false)
-                SkillBegin(game);
+            qDebug()<<"line 34";
+            if(this->skill_open==false)SkillBegin(game);
             this->AttackObject(&game);
-            this->state=2;
+            if(!this->Attack_list.empty())this->state=2;
         }
-        if(!this->timer_skilling.isActive()){
-            this->state=1;
-            SkillEnd();
-        }
+        if(!this->timer_skilling.isActive())SkillEnd();
         this->be_attacked();
     }
 }
@@ -44,43 +48,44 @@ void role_E::SkillBegin(Game &game){
     this->temp=this->health;
     this->health=4000;
     this->timer_skilling.start(15000);
-    this->timer_skilling.isSingleShot();
-    if(!this->timer_skilling.isActive())
-    {
-        this->timer_skilling.stop();
-        this->skill_open=false;
-        this->timer_skillcd.start(20000);
-        this->timer_attackcd.isSingleShot();
-    }
+    this->timer_skilling.setSingleShot(true);
 }
 
 void role_E::SkillEnd(){
     this->health=3500*(this->health/4000);
     this->health+=350;
-    if(!this->timer_attackcd.isActive())
-    {
-        this->timer_skillcd.stop();
-    }
+    this->state=1;
+    this->skill_open=false;
+    this->timer_skillcd.start(20000);
+    this->timer_attackcd.setSingleShot(true);
 }
 
 void role_E::Attack(Game *game)
 {
-    this->timer_attacking.start(500);
-    this->timer_attacking.isSingleShot();
-    for (auto object:Attack_list){
-        object->be_attacking=true;
-        object->health-=this->attack_power;
-    }
-    if(!this->timer_attackcd.isActive())
+    if(!this->is_attacking)
     {
-        this->timer_attacking.stop();
-        if(this->timer_skilling.isActive())this->state=3;
-        this->state=1;
+        this->is_attacking=true;
+        this->timer_attacking.start(700);
+        this->timer_attacking.setSingleShot(true);
+        for (auto object:Attack_list){
+            if(object==nullptr)continue;
+            object->be_attacking=true;
+            object->health-=this->attack_power;
+        }
+    }
+    if(!this->timer_attacking.isActive())
+    {
+        if(this->timer_skilling.isActive())
+            this->state=3;
+        else
+            this->state=1;
+        this->is_attacking=false;
         this->timer_attacking.start(this->attack_interval);
-        this->timer_attacking.isSingleShot();
+        this->timer_attacking.setSingleShot(true);
         for (auto object:Attack_list){
             object->be_attacking=false;
             Attack_list.pop_back();
         }
     }
 }
+

@@ -16,7 +16,7 @@ PlayScene::PlayScene(QWidget *parent)
      *窗口参数初始化
      */
     this->setFixedSize(Play_Width,Play_Height);
-    this->setWindowTitle("异形工厂");
+    this->setWindowTitle("xx大战xx");
     QFont font;
     font.setFamily("华文新魏");
     font.setPointSize(23);
@@ -41,10 +41,24 @@ PlayScene::PlayScene(QWidget *parent)
      */
 
 
-    connect(StoreBtn,&QPushButton::clicked,[=](){//进入到商店界面
-        this->hide();//主界面隐藏
-        storeScene->show();
-    });
+
+
+
+    QPainter painter(this);
+    QString path1(":/res/game_cell.png");
+
+
+
+    int rows = 6;
+    int columns = 12;
+
+
+    for (int i = 0; i < rows; ++i) {
+        for (int j = 0; j < columns; ++j) {
+           painter.drawPixmap(i * Cell_Size + Left_Width, j * Cell_Size + Up_Height, Cell_Size, Cell_Size, path1);
+        }
+    }
+
     connect(HelpBtn,&QPushButton::clicked,[=](){//进入到帮助界面
         this->hide();
         helpScene->show();
@@ -53,11 +67,11 @@ PlayScene::PlayScene(QWidget *parent)
         emit gameBack();
     });
     connect(SoundOnBtn, &QPushButton::clicked, this, [=]() {
-            musicProcess->start(program, arguments);
+        musicProcess->start(program, arguments);
     });
     connect(A_Btn,&QPushButton::clicked, this, [=]()
             {
-        this->SelectName="A"; });
+                this->SelectName="A"; });
     connect(B_Btn,&QPushButton::clicked, this, [=]()
             { this->SelectName="B"; });
     connect(C_Btn,&QPushButton::clicked, this, [=]()
@@ -79,172 +93,207 @@ PlayScene::PlayScene(QWidget *parent)
 void PlayScene::setupButtons(){
     StoreBtn = new MyPushButton;
     StoreBtn->setParent(this);
-    StoreBtn->setFixedSize(Button_Size, Button_Size);
+    StoreBtn->setFixedSize(Button_Size/2, Button_Size/2);
     StoreBtn->setStyleSheet("QPushButton{image: url(:/res/store_button.png)}");
-     StoreBtn->move(50,820);
+    StoreBtn->move(850,50);
 
     SaveBtn = new MyPushButton;
     SaveBtn->setParent(this);
     SaveBtn->setFixedSize(Button_Size/2, Button_Size/2);
     SaveBtn->setStyleSheet("QPushButton{image: url(:/res/save.png)}");
-    SaveBtn->move(50,880);
+    SaveBtn->move(950,50);
 
     LoadBtn = new MyPushButton;
     LoadBtn->setParent(this);
     LoadBtn->setFixedSize(Button_Size/2, Button_Size/2);
     LoadBtn->setStyleSheet("QPushButton{image: url(:/res/load.png)}");
-    LoadBtn->move(50,940);
+    LoadBtn->move(1000,50);
 
     GameBackBtn = new MyPushButton;
     GameBackBtn->setParent(this);
     GameBackBtn->setFixedSize(Button_Size/2, Button_Size/2);
     GameBackBtn->setStyleSheet("QPushButton{image: url(:/res/game_back.png)}");
-    GameBackBtn->move(50,1000);
+    GameBackBtn->move(1050,50);
 
     HelpBtn = new MyPushButton;
     HelpBtn->setParent(this);
     HelpBtn->setFixedSize(Button_Size/2, Button_Size/2);
     HelpBtn->setStyleSheet("QPushButton{image: url(:/res/help.png)}");
-    HelpBtn->move(50,1060);
+    HelpBtn->move(1100,50);
 
     SoundOnBtn = new MyPushButton;
     SoundOnBtn->setParent(this);
     SoundOnBtn->setFixedSize(Button_Size/2, Button_Size/2);
     SoundOnBtn->setStyleSheet("QPushButton{image: url(:/res/sound_on.png)}");
-    SoundOnBtn->move(50,1120);
+    SoundOnBtn->move(1150,50);
 
     A_Btn = new MyPushButton;
     A_Btn->setParent(this);
-    A_Btn->setFixedSize(50, 100);
+    A_Btn->setFixedSize(80, 100);
     A_Btn->setStyleSheet("QPushButton{image: url(:/res/A_0.png)}");
-    A_Btn->move(50,50);
+    A_Btn->move(50,0);
 
     B_Btn = new MyPushButton;
     B_Btn->setParent(this);
-    B_Btn->setFixedSize(50, 100);
+    B_Btn->setFixedSize(80, 100);
     B_Btn->setStyleSheet("QPushButton{image: url(:/res/B_0.png)}");
-    B_Btn->move(150,50);
+    B_Btn->move(150,0);
 
     C_Btn = new MyPushButton;
     C_Btn->setParent(this);
-    C_Btn->setFixedSize(50,100);
+    C_Btn->setFixedSize(80,100);
     C_Btn->setStyleSheet("QPushButton{image: url(:/res/C_0.png)}");
-    C_Btn->move(250,50);
+    C_Btn->move(250,0);
 
     D_Btn = new MyPushButton;
     D_Btn->setParent(this);
-    D_Btn->setFixedSize(50,100);
+    D_Btn->setFixedSize(80,100);
     D_Btn->setStyleSheet("QPushButton{image: url(:/res/D_0.png)}");
-    D_Btn->move(350,50);
+    D_Btn->move(350,0);
 
 
     E_Btn = new MyPushButton;
     E_Btn->setParent(this);
-    E_Btn->setFixedSize(50,100);
+    E_Btn->setFixedSize(80,100);
     E_Btn->setStyleSheet("QPushButton{image: url(:/res/E_0.png)}");
-    E_Btn->move(450,50);
+    E_Btn->move(450,0);
 
     F_Btn = new MyPushButton;
     F_Btn->setParent(this);
-    F_Btn->setFixedSize(50,100);
+    F_Btn->setFixedSize(80,100);
     F_Btn->setStyleSheet("QPushButton{image: url(:/res/F_0.png)}");
-    F_Btn->move(550,50);
+    F_Btn->move(550,0);
 
 }
 
 void PlayScene::setupRoles(){
-    for(auto it = game.OurRoles.begin(); it != game.OurRoles.end();){
-        auto role=*it;
-            QString path=":/res/_.png";
-        path.insert(6,role->name);
-            int ind=path.indexOf('.');
-        if(role->health<=0)role->state=4;
-        path.insert(ind,QString::number(role->state));
-            QPainter painter1(this);
-            QPainter painterline1(this);
-            QPainter painterline2(this);
-            painterline1.setPen(QPen(Qt::red, 2));
-            painterline1.setPen(QPen(Qt::blue, 2));
-            QPoint start1=QPoint(role->posi*Cell_Size+Left_Width-40,role->posj*Cell_Size+Up_Height+5);
-            QPoint end1=QPoint(role->posi*Cell_Size+Left_Width-40+0.8*role->health,role->posj*Cell_Size+Up_Height+5);
-            QPoint start2=QPoint(role->posi*Cell_Size+Left_Width-40,role->posj*Cell_Size+Up_Height+10);
-            QPoint end2=QPoint(role->posi*Cell_Size+Left_Width-40+0.8*role->health,role->posj*Cell_Size+Up_Height+10);
+    for (int i = 0; i < game.OurRoles.size(); /* size() 调用放在循环体内 */) {
+        auto role = game.OurRoles[i];
+        QString path = ":/res/_.png";
+        path.insert(6, role->name);
+        int ind = path.indexOf('.');
 
-        if(role->state==4){
-            qDebug()<<"setup role"<<path<<role->posi<<role->posj;
-            painter1.drawPixmap(role->posi *Cell_Size+Left_Width, role->posj*Cell_Size+Up_Height, Cell_Size-20, Cell_Size-20, path);
-            auto temp=role;
-            it = game.OurRoles.erase(it);
-            delete temp;
-            continue;
-            }
-        if(role->be_attacking){
-                qDebug()<<"setup role"<<path<<role->posi<<role->posj;
+        // 如果角色的健康值小于等于 0，将状态设置为 4
+        if (role->health <= 0) {
+            role->state = 4;
+        }
+
+        // 根据角色状态更新路径
+        path.insert(ind, QString::number(role->state));
+
+        // 创建绘图对象
+        QPainter painter1(this);
+        painter1.setPen(QPen(Qt::red, 5));
+        QPoint start1 = QPoint(role->posi * Cell_Size + Left_Width + 40, role->posj * Cell_Size + Up_Height + 100);
+        QPoint end1 = QPoint(role->posi * Cell_Size + Left_Width + 40 + 0.025 * role->health, role->posj * Cell_Size + Up_Height + 100);
+        painter1.drawLine(start1, end1);
+
+        // 重新设置 QPainter 对象的颜色为蓝色，并绘制蓝色技能冷却条
+        painter1.setPen(QPen(Qt::blue, 5));
+        QPoint start2 = QPoint(role->posi * Cell_Size + Left_Width + 40, role->posj * Cell_Size + Up_Height + 110);
+        QPoint end2 = QPoint(role->posi * Cell_Size + Left_Width + 40 + 0.003 * role->timer_skillcd.remainingTime(), role->posj * Cell_Size + Up_Height + 110);
+        painter1.drawLine(start2, end2);
+
+        // 处理角色的状态
+        if (role->state == 4) {
+            // 绘制角色图像
+            painter1.drawPixmap(role->posi * Cell_Size + Left_Width, role->posj * Cell_Size + Up_Height, Cell_Size + 5, Cell_Size + 5, path);
+            // 从列表中移除角色并获取下一个元素的迭代器
+            game.OurRoles.removeOne(role);
+            // 注意：在移除元素后，i 不递增，因为元素的数量减少了，当前的 i 可能会指向下一个元素
+        }
+        else
+        {
+         if (role->be_attacking) {
+                // 绘制具有透明度的角色图像
                 QPixmap pixmap(path);
-            painter1.drawPixmap(role->posi *Cell_Size+Left_Width, role->posj*Cell_Size+Up_Height, Cell_Size-20, Cell_Size-20, path);
-                    QPixmap whiteMask(pixmap.size());
-                    whiteMask.fill(Qt::white);
-
-                    painter1.setCompositionMode(QPainter::CompositionMode_Plus);
-                    painter1.drawPixmap(role->posi *Cell_Size, role->posj*Cell_Size, whiteMask);
+                painter1.setOpacity(0.5);
+                painter1.drawPixmap(role->posi*Cell_Size+Left_Width, role->posj*Cell_Size+Up_Height, Cell_Size , Cell_Size, pixmap);
+                painter1.setOpacity(1.0);
             }
-        else {
-            qDebug()<<"setup role"<<path<<role->posi<<role->posj;
-            painter1.drawPixmap(role->posi *Cell_Size+Left_Width, role->posj*Cell_Size+Up_Height, Cell_Size-20, Cell_Size-20, path);
+         else
+         {
+                // 绘制正常状态的角色图像
+         painter1.drawPixmap(role->posi*Cell_Size+Left_Width, role->posj*Cell_Size+Up_Height, Cell_Size , Cell_Size, path);
             }
 
 
-            for(auto bullet:role->Bullets){
-                QString name=bullet->name;
-                QString path_item=":/res/_bullet.png";
-                        path_item.insert(6,name);
-                painter1.drawPixmap(bullet->posx,bullet->posy,Cell_Size-20, Cell_Size-20, path_item);
-                    }
+            // 遍历并绘制角色的子弹
+            for (auto bullet : role->Bullets) {
+                if (!bullet->is_attacking) {
+                    continue;
+                }
+                QString name = bullet->name;
+                QString path_item = ":/res/_bullet.png";
+                path_item.insert(6, name);
+                painter1.drawPixmap(role->posi*Cell_Size+Left_Width, role->posj*Cell_Size+Up_Height+10, Cell_Size - 20, (Cell_Size - 20) / 3, path_item);
+            }
 
-            it++;
-      }
-    for(auto it = game.EnemyRoles.begin(); it != game.EnemyRoles.end();){
-        auto role=*it;
-        QString path=":/res/_.png";
-        path.insert(6,role->name);
-        int ind=path.indexOf('.');
-        if(role->health<=0)role->state=4;
-        path.insert(ind,QString::number(role->state));
+            // 递增 i 以处理下一个角色
+            ++i;
+        }
+    }
+    // 遍历敌人角色列表
+    for (int i = 0; i < game.EnemyRoles.size(); /* size() 调用放在循环体内 */) {
+        auto role = game.EnemyRoles[i];
+        QString path = ":/res/_.png";
+        path.insert(6, role->name);
+        int ind = path.indexOf('.');
+
+        // 如果角色的健康值小于等于 0，将状态设置为 4
+        if (role->health <= 0) {
+            role->state = 4;
+        }
+
+        // 根据角色状态更新路径
+        path.insert(ind, QString::number(role->state));
+
+        // 创建绘图对象
         QPainter painter1(this);
         QPainter painterline1(this);
-        painterline1.setPen(QPen(Qt::red, 2));
-        QPoint start1=QPoint(role->posx+Left_Width-40,role->posy*Cell_Size+Up_Height+5);
-        QPoint end1=QPoint(role->posx*Cell_Size+Left_Width-40+0.8*role->health,role->posy*Cell_Size+Up_Height+5);
-        painterline1.drawLine(start1,end1);
-        if(role->state==4){
-            painter1.drawPixmap(role->posx, role->posy, Cell_Size-20, Cell_Size-20, path);
-            auto temp=role;
-            it = game.EnemyRoles.erase(it);
-            delete temp;
-            continue;
-        }
-        if(role->be_attacking){
+        painterline1.setPen(QPen(Qt::red, 5));
 
-            QPixmap pixmap(path);
-            painter1.drawPixmap(role->posx, role->posy, Cell_Size-20, Cell_Size-20, path);
-            QPixmap whiteMask(pixmap.size());
-            whiteMask.fill(Qt::white);
-            painter1.setCompositionMode(QPainter::CompositionMode_Plus);
-            painter1.drawPixmap(role->posx, role->posy, Cell_Size-20, Cell_Size-20, whiteMask);
-        }
-        else {
+        // 绘制生命条
+        QPoint start1 = QPoint(role->posx+40, role->posy + 100);
+        QPoint end1 = QPoint(role->posx+40 + 0.025 * role->health, role->posy + 100);
+        painterline1.drawLine(start1, end1);
 
-            painter1.drawPixmap(role->posx, role->posy, Cell_Size-20, Cell_Size-20, path);
-        }
-        for(auto bullet:role->Bullets){
-            QString name=bullet->name;
-            QString path_item=":/res/_bullet.png";
-            path_item.insert(6,name);
-            painter1.drawPixmap(bullet->posx,bullet->posy,Cell_Size-20, Cell_Size-20, path_item);
-        }
+        // 处理角色的状态
+        if (role->state == 4) {
+            // 绘制角色图像
+            painter1.drawPixmap(role->posi * Cell_Size + Left_Width, role->posj * Cell_Size + Up_Height, Cell_Size + 5, Cell_Size + 5, path);
 
-        it++;
+            // 从列表中移除角色并获取下一个元素的迭代器
+            game.EnemyRoles.removeOne(role);
+            // 注意：在移除元素后，i 不递增，因为元素的数量减少了，当前的 i 可能会指向下一个元素
+        } else {
+            if (role->be_attacking) {
+                // 绘制具有透明度的角色图像
+                QPixmap pixmap(path);
+                painter1.setOpacity(0.5);
+                painter1.drawPixmap(role->posx, role->posy, Cell_Size + 5, Cell_Size + 5, pixmap);
+                painter1.setOpacity(1.0);
+            } else {
+                // 绘制正常状态的角色图像
+                painter1.drawPixmap(role->posx, role->posy, Cell_Size + 5, Cell_Size + 5, path);
+            }
+
+            // 遍历并绘制角色的子弹
+            for (auto bullet : role->Bullets) {
+                if (!bullet->is_attacking) {
+                    continue;
+                }
+                QString name = bullet->name;
+                QString path_item = ":/res/_bullet.png";
+                path_item.insert(6, name);
+                painter1.drawPixmap(bullet->posx, bullet->posy + 40, Cell_Size - 20, (Cell_Size - 20) / 3, path_item);
+            }
+
+            // 递增 i 以处理下一个角色
+            ++i;
+        }
     }
+
 
 }
 
@@ -255,7 +304,7 @@ void PlayScene::setupCells(){
     painter.setPen(pen);
     for (int y = 100; y <=100+6*Cell_Size; y += Cell_Size)
     {
-       painter.drawLine(30, y, 30+12*Cell_Size, y);
+        painter.drawLine(30, y, 30+12*Cell_Size, y);
     }
     for (int x =30; x <=30+12*Cell_Size; x +=Cell_Size)
     {
@@ -272,7 +321,7 @@ void PlayScene::setupBlueRole(){
         QPixmap pixmap(path);
         QPainter painter2(this);
         painter2.drawPixmap(SelectPos.i*Cell_Size+Left_Width,SelectPos.j*Cell_Size+Up_Height,Cell_Size-10, Cell_Size-10,pixmap);
-        }
+    }
     else return;
 }
 
@@ -282,8 +331,8 @@ void PlayScene::setupText(){
     painter4.setFont(QFont("宋体",25, QFont::Bold));
     QString text1="Score:";
     QString text2="Money:";
-    painter4.drawText(1000, 870, text2+QString::number(game.money));
-    painter4.drawText(30,this->height()-20,QString("Level")+QString::number(game.round));
+    painter4.drawText(30,660, text2+QString::number(game.money));
+    painter4.drawText(30,this->height()-20,QString("Round")+QString::number(game.round));
 }
 
 
@@ -294,6 +343,9 @@ void PlayScene::paintEvent(QPaintEvent *)
     setupBlueRole();
     setupRoles();
     setupText();
+    QPainter painter(this);
+
+
     connect(helpScene,&HelpScene::HelpSceneback,this,[=](){
         helpScene->hide();
         this->show();
@@ -369,7 +421,7 @@ void PlayScene::mousePressEvent(QMouseEvent *event)
                 SelectRole=NULL;
             }
         }
-}
+    }
     else if (event->button() == Qt::RightButton)
     {
         SelectName.clear();
@@ -385,7 +437,7 @@ void PlayScene::mouseDoubleClickEvent (QMouseEvent *event) {
         if(!role->timer_skillcd.isActive()){
             role->state=3;
         }
-}
+    }
 }
 void PlayScene::mouseMoveEvent(QMouseEvent *event)
 {//鼠标移动事件
@@ -398,120 +450,129 @@ void PlayScene::mouseMoveEvent(QMouseEvent *event)
     }
 }
 void PlayScene::EnemyCome(){
-    if(game.enemy_timer.remainingTime()<75000&&game.batch==3){
+    if(game.enemy_timer.remainingTime()<75000 && game.batch == 3){
         game.batch++;
-        for(int i=0;i<10;i++){
-            MyRole*SelectEnemy=NULL;
-            if(game.EnemyList[3][i]=='G'){
-                SelectEnemy=new Role_G(QRandomGenerator::global()->bounded(6));
-            }
-            else if(game.EnemyList[3][i]=='H'){
-                SelectEnemy=new Role_H(QRandomGenerator::global()->bounded(6));
-            }
-            else if(game.EnemyList[3][i]=='I'){
-                SelectEnemy=new Role_I(QRandomGenerator::global()->bounded(6));
-            }
-            else if(game.EnemyList[3][i]=='J'){
-                SelectEnemy=new Role_J(QRandomGenerator::global()->bounded(6));
-            }
-            else if(game.EnemyList[3][i]=='K'){
-                SelectEnemy=new Role_K(QRandomGenerator::global()->bounded(6));
-            }
-             if(SelectEnemy)game.EnemyRoles.append(SelectEnemy);
-            }
+        for(int i=0; i<10; i++){
+            QTimer::singleShot(i * 1000 + QRandomGenerator::global()->bounded(1000), this, [this, i]() {
+                MyRole* SelectEnemy = nullptr;
+                if(game.EnemyList[3][i] == 'G'){
+                    SelectEnemy = new Role_G(QRandomGenerator::global()->bounded(6));
+                }
+                else if(game.EnemyList[3][i] == 'H'){
+                    SelectEnemy = new Role_H(QRandomGenerator::global()->bounded(6));
+                }
+                else if(game.EnemyList[3][i] == 'I'){
+                    SelectEnemy = new Role_I(QRandomGenerator::global()->bounded(6));
+                }
+                else if(game.EnemyList[3][i] == 'J'){
+                    SelectEnemy = new Role_J(QRandomGenerator::global()->bounded(6));
+                }
+                else if(game.EnemyList[3][i] == 'K'){
+                    SelectEnemy = new Role_K(QRandomGenerator::global()->bounded(6));
+                }
+                if(SelectEnemy) game.EnemyRoles.append(SelectEnemy);
+            });
+        }
+    }
+    else if(game.enemy_timer.remainingTime() < 150000 && game.batch == 2){
+        game.batch++;
+        for(int i=0; i<10; i++){
+            QTimer::singleShot(i * 1000 + QRandomGenerator::global()->bounded(1000), this, [this, i]() {
+                MyRole* SelectEnemy = nullptr;
+                if(game.EnemyList[2][i] == 'G'){
+                    SelectEnemy = new Role_G(QRandomGenerator::global()->bounded(6));
+                }
+                else if(game.EnemyList[2][i] == 'H'){
+                    SelectEnemy = new Role_H(QRandomGenerator::global()->bounded(6));
+                }
+                else if(game.EnemyList[2][i] == 'I'){
+                    SelectEnemy = new Role_I(QRandomGenerator::global()->bounded(6));
+                }
+                else if(game.EnemyList[2][i] == 'J'){
+                    SelectEnemy = new Role_J(QRandomGenerator::global()->bounded(6));
+                }
+                else if(game.EnemyList[2][i] == 'K'){
+                    SelectEnemy = new Role_K(QRandomGenerator::global()->bounded(6));
+                }
+                if(SelectEnemy) game.EnemyRoles.append(SelectEnemy);
+            });
+        }
+    }
+    else if(game.enemy_timer.remainingTime() < 225000 && game.batch == 1){
+        game.batch++;
+        for(int i=0; i<10; i++){
+            QTimer::singleShot(i * 1000 + QRandomGenerator::global()->bounded(1000), this, [this, i]() {
+                MyRole* SelectEnemy = nullptr;
+                if(game.EnemyList[1][i] == 'G'){
+                    SelectEnemy = new Role_G(QRandomGenerator::global()->bounded(6));
+                }
+                else if(game.EnemyList[1][i] == 'H'){
+                    SelectEnemy = new Role_H(QRandomGenerator::global()->bounded(6));
+                }
+                else if(game.EnemyList[1][i] == 'I'){
+                    SelectEnemy = new Role_I(QRandomGenerator::global()->bounded(6));
+                }
+                else if(game.EnemyList[1][i] == 'J'){
+                    SelectEnemy = new Role_J(QRandomGenerator::global()->bounded(6));
+                }
+                else if(game.EnemyList[1][i] == 'K'){
+                    SelectEnemy = new Role_K(QRandomGenerator::global()->bounded(6));
+                }
+                if(SelectEnemy) game.EnemyRoles.append(SelectEnemy);
+            });
+        }
+    }
+    else if(game.enemy_timer.remainingTime() < 300000 && game.batch == 0){
+        game.batch++;
+        for(int i=0; i<10; i++){
+            QTimer::singleShot(i * 1000 + QRandomGenerator::global()->bounded(1000), this, [this, i]() {
+                MyRole* SelectEnemy = nullptr;
+                if(game.EnemyList[0][i] == 'G'){
+                    SelectEnemy = new Role_G(1);
+                }
+                else if(game.EnemyList[0][i] == 'H'){
+                    SelectEnemy = new Role_H(2);
+                }
+                else if(game.EnemyList[0][i] == 'I'){
+                    SelectEnemy = new Role_I(3);
+                }
+                else if(game.EnemyList[0][i] == 'J'){
+                    SelectEnemy = new Role_J(4);
+                }
+                else if(game.EnemyList[0][i] == 'K'){
+                    SelectEnemy = new Role_K(5);
+                }
+                if(SelectEnemy) game.EnemyRoles.append(SelectEnemy);
+            });
+        }
+    }
+}
 
-        }
-    else if(game.enemy_timer.remainingTime()<150000&&game.batch==2){
-        game.batch++;
-        for(int i=0;i<10;i++){
-            MyRole*SelectEnemy=NULL;
-            if(game.EnemyList[2][i]=='G'){
-                SelectEnemy=new Role_G(QRandomGenerator::global()->bounded(6));
-            }
-            else if(game.EnemyList[2][i]=='H'){
-                SelectEnemy=new Role_H(QRandomGenerator::global()->bounded(6));
-            }
-            else if(game.EnemyList[2][i]=='I'){
-                SelectEnemy=new Role_I(QRandomGenerator::global()->bounded(6));
-            }
-            else if(game.EnemyList[2][i]=='J'){
-                SelectEnemy=new Role_J(QRandomGenerator::global()->bounded(6));
-            }
-            else if(game.EnemyList[2][i]=='K'){
-                SelectEnemy=new Role_K(QRandomGenerator::global()->bounded(6));
-            }
-            if(SelectEnemy) game.EnemyRoles.append(SelectEnemy);
-        }
-    }
-        else if(game.enemy_timer.remainingTime()<225000&&game.batch==1){
-             game.batch++;
-            for(int i=0;i<10;i++){
-                MyRole*SelectEnemy=NULL;
-                if(game.EnemyList[1][i]=='G'){
-                    SelectEnemy=new Role_G(QRandomGenerator::global()->bounded(6));
-                }
-                else if(game.EnemyList[1][i]=='H'){
-                    SelectEnemy=new Role_H(QRandomGenerator::global()->bounded(6));
-                }
-                else if(game.EnemyList[1][i]=='I'){
-                    SelectEnemy=new Role_I(QRandomGenerator::global()->bounded(6));
-                }
-                else if(game.EnemyList[1][i]=='J'){
-                    SelectEnemy=new Role_J(QRandomGenerator::global()->bounded(6));
-                }
-                else if(game.EnemyList[1][i]=='K'){
-                    SelectEnemy=new Role_K(QRandomGenerator::global()->bounded(6));
-                }
-               if(SelectEnemy)  game.EnemyRoles.append(SelectEnemy);
-            }
-        }
-        else if(game.enemy_timer.remainingTime()<300000&&game.batch==0){
-        game.batch++;
-        for(int i=0;i<10;i++){
-            MyRole*SelectEnemy=NULL;
-            if(game.EnemyList[3][i]=='G'){
-                SelectEnemy=new Role_G(1);
-            }
-            else if(game.EnemyList[3][i]=='H'){
-                SelectEnemy=new Role_H(2);
-            }
-            else if(game.EnemyList[3][i]=='I'){
-                SelectEnemy=new Role_I(3);
-            }
-            else if(game.EnemyList[3][i]=='J'){
-                SelectEnemy=new Role_J(4);
-            }
-            else if(game.EnemyList[3][i]=='K'){
-                SelectEnemy=new Role_K(5);
-            }
-            if(SelectEnemy)game.EnemyRoles.append(SelectEnemy);
-        }
-    }
-
-    }
 
 void PlayScene::BeginUpdate()
 {//工厂开始动
     timer.start(50);
     // 监听定时器
     connect(&timer, &QTimer::timeout, this, [=]()
-{
-        money_timer++;
-        if(money_timer==20){
-            money_timer=0;
-            game.money++;
-        }
-        //这里是每隔一段时间就重绘地图和更新地图中传送带的运行
+            {
+                money_timer++;
+                if(money_timer==20){
+                    money_timer=0;
+                    game.money++;
+                }
+                //这里是每隔一段时间就重绘地图和更新地图中传送带的运行
                 //重新绘制图片
-         update();
+                update();
 
-             for(auto role:game.OurRoles)
-                 role->UpdateState(game);
+                for(auto role:game.OurRoles)
+                    role->UpdateState(game);
 
-             for(auto role:game.EnemyRoles)
-                 role->UpdateState(game);
-             EnemyCome();
-    });
+                for(auto role:game.EnemyRoles){
+                    qDebug()<<role->name<<role->posi<<role->posj<<"is updating";
+                    role->UpdateState(game);
+                }
+                EnemyCome();
+            });
 }
 
 void PlayScene::saveGame() {

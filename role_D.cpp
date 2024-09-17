@@ -5,19 +5,24 @@ role_D::role_D(int i,int j,bool enemy,int health,int attack_power,int attack_int
     :MyRole( i, j, enemy, health,attack_power, attack_interval,cost,name){
     this->state=1;
     this->be_attacking=false;
-    for(int i=1;i<=3;i++)
+    for(int i=0;i<=3;i++)
         this->Attack_area.append(gridvec(this->posi+i,this->posj));
+    this->timer_attackcd.start(this->attack_interval);
+    this->timer_attackcd.setSingleShot(true);
+    this->timer_skillcd.start(20000);
+   this->timer_skillcd.setSingleShot(true);
+    this->is_attacking=false;
 };
 
 void role_D::UpdateState(Game &game)
 {
-
     if(this->state==1)
     {
         if(!this->timer_attackcd.isActive())
         {
             this->AttackObject(&game);
-            this->state=2;
+            if(!this->Attack_list.empty())
+                this->state=2;
         }
         this->be_attacked();
     }
@@ -27,15 +32,12 @@ void role_D::UpdateState(Game &game)
     if(this->state==3){
         if(!this->timer_skillcd.isActive())
         {
-            if(this->skill_open==false)
-                SkillBegin(game);
+            qDebug()<<"line 34";
+            if(this->skill_open==false)SkillBegin(game);
             this->AttackObject(&game);
-            this->state=2;
+            if(!this->Attack_list.empty())this->state=2;
         }
-        if(!this->timer_skilling.isActive()){
-            this->state=1;
-            SkillEnd();
-        }
+        if(!this->timer_skilling.isActive())SkillEnd();
         this->be_attacked();
     }
 }
@@ -45,45 +47,43 @@ void role_D::SkillBegin(Game &game){
     this->attack_power=1400;
     this->skill_open=true;
     this->timer_skilling.start(10000);
-    this->timer_skilling.isSingleShot();
-    if(!this->timer_skilling.isActive())
-    {
-        this->timer_skilling.stop();
-        this->skill_open=false;
-        this->timer_skillcd.start(20000);
-        this->timer_attackcd.isSingleShot();
-    }
+    this->timer_skilling.setSingleShot(true);
 }
 
 void role_D::SkillEnd(){
     this->attack_power=this->temp;
-    if(!this->timer_attackcd.isActive())
-    {
-        this->timer_skillcd.stop();
-    }
+    this->state=1;
+    this->skill_open=false;
+    this->timer_skillcd.start(20000);
+    this->timer_attackcd.setSingleShot(true);
 }
 
 void role_D::Attack(Game *game){
-    this->timer_attacking.start(500);
-    this->timer_attacking.isSingleShot();
-    for (auto object:Attack_list){
-        myBullet*temp=new myBullet(this->name,this->posi,this->posj,this->attack_power);
-        object->Bullets.append(temp);
-        if(!this->timer_skilling.isActive())
-        {
-            myBullet*xuanyun=new myBullet(this->name,this->posi,this->posj,0);
-            object->Bullets.append(xuanyun);
+    if(!is_attacking){
+        is_attacking=true;
+        this->timer_attacking.start(700);
+        this->timer_attacking.setSingleShot(true);
+        for (auto object:Attack_list){
+            if(object==nullptr)continue;
+            myBullet*temp=new myBullet(this->name,this->posi*Cell_Size+Left_Width+40,this->posj*Cell_Size+Up_Height,this->attack_power);
+            if(!this->timer_skilling.isActive())
+            {
+                myBullet*xuanyun=new myBullet(this->name,this->posi*Cell_Size+Left_Width+40,this->posj*Cell_Size+Up_Height,0);
+                object->Bullets.append(xuanyun);
+            }
+            if(temp!=NULL)object->Bullets.push_back(temp);
         }
     }
-    if(!this->timer_attackcd.isActive())
+    if(!this->timer_attacking.isActive())
     {
-        timer_attacking.stop();
         if(this->timer_skilling.isActive())this->state=3;
-        this->state=1;
+        else
+            this->state=1;
+        this->is_attacking=false;
         this->timer_attackcd.start(this->attack_interval);
-        this->timer_attackcd.isSingleShot();
+        this->timer_attackcd.setSingleShot(true);
         for (auto object:Attack_list){
-            object->be_attacking=false;
+            if(object!=NULL)object->be_attacking=false;
             Attack_list.pop_back();
         }
     }

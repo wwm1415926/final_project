@@ -61,8 +61,9 @@ void Game::FirstGame(){
     EnemyList[3][9] = 0;  // 填充 0
     this->batch=0;
     this->round=1;
-    this->money=999;
-    enemy_timer.start(300000);
+    this->money=20;
+    enemy_timer.start(200000);
+    enemy_timer.setSingleShot(true);
 }
 void Game::SecondGame(){
 
@@ -90,5 +91,11 @@ bool Game::IsValid(GridVec pos){
 
 //todo 检测是否有东西，并从OurRoles列表移除
 void Game::RemoveRole(GridVec pos){
-
+    for(auto role:this->OurRoles){
+        if(role->posi==pos.i&&role->posj==pos.j){
+        this->OurRoles.removeOne(role);
+        return;
+        }
+    }
+    return;
 }

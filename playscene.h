@@ -30,6 +30,8 @@
 #include <QProcess>
 #include<QRandomGenerator>
 #include<QMap>
+#include <QPolygon>
+#include<QLinearGradient>
 class Game;
 class PlayScene : public QMainWindow
 {
@@ -110,3 +112,4 @@ private slots:
 
 
 #endif // PLAYSCENE_H
+

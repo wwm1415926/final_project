@@ -13,6 +13,7 @@ public:
     myBullet();
     myBullet(QString name,int x,int y,int attack_power);
     int attack_power;
+    bool is_attacking;
 };
 
 #endif // MYBULLET_H

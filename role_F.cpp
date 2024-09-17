@@ -5,8 +5,13 @@ role_F::role_F(int i,int j,bool enemy,int health,int attack_power,int attack_int
     this->state=1;
     this->be_attacking=false;
     for(int i=this->posi;i<=this->posi+5;i++)
-        for(int j=this->posj-1;j<=this->posj+1;j++)
+        for(int j=this->posj;j<=this->posj+1;j++)
             this->Attack_area.append(gridvec(i,j));
+    this->timer_attackcd.start(this->attack_interval);
+    this->timer_attackcd.setSingleShot(true);
+    this->timer_skillcd.start(20000);
+    this->timer_skillcd.setSingleShot(true);
+    this->is_attacking=false;
 };
 
 void role_F::UpdateState(Game &game)
@@ -17,7 +22,8 @@ void role_F::UpdateState(Game &game)
         if(!this->timer_attackcd.isActive())
         {
             this->AttackObject(&game);
-            this->state=2;
+            if(!this->Attack_list.empty())
+                this->state=2;
         }
         this->be_attacked();
     }
@@ -27,15 +33,12 @@ void role_F::UpdateState(Game &game)
     if(this->state==3){
         if(!this->timer_skillcd.isActive())
         {
-            if(this->skill_open==false)
-                SkillBegin(game);
+            qDebug()<<"line 34";
+            if(this->skill_open==false)SkillBegin(game);
             this->AttackObject(&game);
-            this->state=2;
+            if(!this->Attack_list.empty())this->state=2;
         }
-        if(!this->timer_skilling.isActive()){
-            this->state=1;
-            SkillEnd();
-        }
+        if(!this->timer_skilling.isActive())SkillEnd();
         this->be_attacked();
     }
 }
@@ -48,20 +51,16 @@ void role_F::SkillBegin(Game &game){
         if(game.OurRoles[i]->posi>=this->posi&&game.OurRoles[i]->posi<=this->posi+5&&game.OurRoles[i]->posj>=this->posj-1&&game.OurRoles[i]->posj<=this->posj+1)
             game.OurRoles[i]->health+=500;
     }
-    this->timer_skilling.start(15000);
-    this->timer_skilling.isSingleShot();
-    if(!this->timer_skilling.isActive())
-    {
-        this->timer_skilling.stop();
-        this->skill_open=false;
-        this->timer_skillcd.start(20000);
-        this->timer_attackcd.isSingleShot();
-    }
+    this->timer_skilling.start(1000);
+    this->timer_skilling.setSingleShot(true);
 }
 
 void role_F::SkillEnd()
 {
-    ;
+    this->state=1;
+    this->skill_open=false;
+    this->timer_skillcd.start(20000);
+    this->timer_attackcd.setSingleShot(true);
 }
 
 void role_F::Attack(Game *game)

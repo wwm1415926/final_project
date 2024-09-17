@@ -4,116 +4,61 @@
         <file>res/A_1.png</file>
         <file>res/A_2.png</file>
         <file>res/A_3.png</file>
+        <file>res/A_4.png</file>
+        <file>res/A_blue.png</file>
         <file>res/B_0.png</file>
         <file>res/B_1.png</file>
         <file>res/B_2.png</file>
         <file>res/B_3.png</file>
         <file>res/B_4.png</file>
-        <file>res/B_bullet.png</file>
+        <file>res/B_blue.png</file>
         <file>res/back.png</file>
-        <file>res/barrier.png</file>
-        <file>res/belt_A.png</file>
-        <file>res/belt_A_S.png</file>
-        <file>res/belt_A_W.png</file>
-        <file>res/belt_blue_A.png</file>
-        <file>res/belt_blue_A_S.png</file>
-        <file>res/belt_blue_A_W.png</file>
-        <file>res/belt_blue_D.png</file>
-        <file>res/belt_blue_D_S.png</file>
-        <file>res/belt_blue_D_W.png</file>
-        <file>res/belt_blue_S.png</file>
-        <file>res/belt_blue_S_A.png</file>
-        <file>res/belt_blue_S_D.png</file>
-        <file>res/belt_blue_W.png</file>
-        <file>res/belt_blue_W_A.png</file>
-        <file>res/belt_blue_W_D.png</file>
-        <file>res/belt_button.png</file>
-        <file>res/belt_D.png</file>
-        <file>res/belt_D_S.png</file>
-        <file>res/belt_D_W.png</file>
-        <file>res/belt_S.png</file>
-        <file>res/belt_S_A.png</file>
-        <file>res/belt_S_D.png</file>
-        <file>res/belt_W.png</file>
-        <file>res/belt_W_A.png</file>
-        <file>res/belt_W_D.png</file>
         <file>res/C_0.png</file>
-        <file>res/choose_background.png</file>
+        <file>res/C_1.png</file>
+        <file>res/C_2.png</file>
+        <file>res/C_3.png</file>
+        <file>res/C_4.png</file>
+        <file>res/C_blue.png</file>
+        <file>res/C_bullet.png</file>
         <file>res/choosescene.png</file>
-        <file>res/cutter_A.png</file>
-        <file>res/cutter_blue_A.png</file>
-        <file>res/cutter_blue_D.png</file>
-        <file>res/cutter_blue_S.png</file>
-        <file>res/cutter_blue_W.png</file>
-        <file>res/cutter_button.png</file>
-        <file>res/cutter_D.png</file>
-        <file>res/cutter_S.png</file>
-        <file>res/cutter_W.png</file>
         <file>res/D_0.png</file>
+        <file>res/D_1.png</file>
+        <file>res/D_2.png</file>
+        <file>res/D_3.png</file>
+        <file>res/D_4.png</file>
         <file>res/E_0.png</file>
+        <file>res/E_1.png</file>
+        <file>res/E_2.png</file>
+        <file>res/E_3.png</file>
+        <file>res/E_4.png</file>
         <file>res/F_0.png</file>
+        <file>res/F_1.png</file>
+        <file>res/F_2.png</file>
+        <file>res/F_3.png</file>
+        <file>res/F_4.png</file>
         <file>res/G_1.png</file>
+        <file>res/G_2.png</file>
         <file>res/game_back.png</file>
         <file>res/game1.png</file>
         <file>res/game2.png</file>
         <file>res/game3.png</file>
-        <file>res/goal.png</file>
         <file>res/H_1.png</file>
+        <file>res/H_2.png</file>
+        <file>res/H_4.png</file>
         <file>res/help.png</file>
         <file>res/help_background.png</file>
         <file>res/help_button.png</file>
         <file>res/hub.png</file>
         <file>res/I_1.png</file>
+        <file>res/I_2.png</file>
+        <file>res/I_3.png</file>
         <file>res/J_1.png</file>
+        <file>res/J_2.png</file>
+        <file>res/J_4.png</file>
         <file>res/K_1.png</file>
+        <file>res/K_2.png</file>
         <file>res/load.png</file>
         <file>res/logo.png</file>
-        <file>res/main_background.png</file>
-        <file>res/mine1.png</file>
-        <file>res/mine1_3_item.png</file>
-        <file>res/mine1_4_item.png</file>
-        <file>res/mine1_item.png</file>
-        <file>res/mine1_l.png</file>
-        <file>res/mine1_l_3_item.png</file>
-        <file>res/mine1_l_4_item.png</file>
-        <file>res/mine1_l_item.png</file>
-        <file>res/mine1_r_3_item.png</file>
-        <file>res/mine1_r_4_item.png</file>
-        <file>res/mine1_r_item.png</file>
-        <file>res/mine2.png</file>
-        <file>res/mine2_3_item.png</file>
-        <file>res/mine2_4_item.png</file>
-        <file>res/mine2_item.png</file>
-        <file>res/mine2_l_3_item.png</file>
-        <file>res/mine2_l_4.png</file>
-        <file>res/mine2_l_4_item.png</file>
-        <file>res/mine2_l_item.png</file>
-        <file>res/mine2_r__3_item.png</file>
-        <file>res/mine2_r_4_item.png</file>
-        <file>res/mine2_r_item.png</file>
-        <file>res/mine3.png</file>
-        <file>res/mine3_item.png</file>
-        <file>res/mine4.png</file>
-        <file>res/mine4_item.png</file>
-        <file>res/miner_A.png</file>
-        <file>res/miner_blue_A.png</file>
-        <file>res/miner_blue_D.png</file>
-        <file>res/miner_blue_S.png</file>
-        <file>res/miner_blue_W.png</file>
-        <file>res/miner_button.png</file>
-        <file>res/miner_D.png</file>
-        <file>res/miner_S.png</file>
-        <file>res/miner_W.png</file>
-        <file>res/money_button.png</file>
-        <file>res/painter_A.png</file>
-        <file>res/painter_blue_A.png</file>
-        <file>res/painter_blue_D.png</file>
-        <file>res/painter_blue_S.png</file>
-        <file>res/painter_blue_W.png</file>
-        <file>res/painter_button.png</file>
-        <file>res/painter_D.png</file>
-        <file>res/painter_S.png</file>
-        <file>res/painter_W.png</file>
         <file>res/save.png</file>
         <file>res/set.png</file>
         <file>res/sound_off.png</file>
@@ -122,17 +67,11 @@
         <file>res/store.png</file>
         <file>res/store_background.png</file>
         <file>res/store_button.png</file>
-        <file>res/trash.png</file>
-        <file>res/trash_A.png</file>
-        <file>res/trash_blue_A.png</file>
-        <file>res/trash_blue_D.png</file>
-        <file>res/trash_blue_S.png</file>
-        <file>res/trash_blue_W.png</file>
-        <file>res/trash_button.png</file>
-        <file>res/trash_D.png</file>
-        <file>res/trash_S.png</file>
-        <file>res/trash_W.png</file>
-        <file>res/A_blue.png</file>
-        <file>res/B_blue.png</file>
+        <file>res/warning.png</file>
+        <file>res/H_bullet.png</file>
+        <file>res/I_bullet.png</file>
+        <file>res/main_background.png</file>
+        <file>res/game_cell.png</file>
+        <file>res/choose_background.png</file>
     </qresource>
 </RCC>

@@ -17,14 +17,19 @@
    <widget class="QPushButton" name="startBtn">
     <property name="geometry">
      <rect>
-      <x>550</x>
-      <y>300</y>
-      <width>141</width>
-      <height>31</height>
+      <x>490</x>
+      <y>500</y>
+      <width>221</width>
+      <height>111</height>
      </rect>
     </property>
+    <property name="font">
+     <font>
+      <pointsize>24</pointsize>
+     </font>
+    </property>
     <property name="text">
-     <string>开始</string>
+     <string>开始游戏</string>
     </property>
    </widget>
   </widget>

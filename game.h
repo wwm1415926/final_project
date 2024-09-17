@@ -24,20 +24,22 @@ public:
     int posx,posy;
     bool enemy;//敌我角色
     int health,cost;
-    double spd;
+    int spd;
     QString name;//名称
     int state;//工作状态,1表示初始，2表示攻击态，3表示技能态,
     QTimer timer_attackcd,timer_attacking,timer_skillcd,timer_skilling;
     QList<myBullet*>Bullets;
 
-        /*
+    /*
          * 攻击相关
          */
-        int attack_interval;
-        int attack_power;
-        bool be_attacking;
-
+    int attack_interval;
+    int attack_power;
+    bool be_attacking;
+    bool is_attacking;
+    int enemy_come;
     MyRole();
+    ~MyRole();
     /*
      *构造函数
      */
@@ -60,7 +62,7 @@ public:
     /*
      *根据坐标和敌我，确定范围内的攻击对象
      */
-     void  AttackObject(Game*game);
+    void  AttackObject(Game*game);
 
     /*
      * 对范围内所有目标发起攻击;如果是近战就改变显示形态并让目标内的敌人频闪一下

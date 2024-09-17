@@ -73,5 +73,24 @@
         <file>res/main_background.png</file>
         <file>res/game_cell.png</file>
         <file>res/choose_background.png</file>
+        <file>res/A_6.png</file>
+        <file>res/A_help.png</file>
+        <file>res/B_6.png</file>
+        <file>res/B_help.png</file>
+        <file>res/C_6.png</file>
+        <file>res/C_help.png</file>
+        <file>res/D_6.png</file>
+        <file>res/D_help.png</file>
+        <file>res/E_6.png</file>
+        <file>res/E_help.png</file>
+        <file>res/F_6.png</file>
+        <file>res/F_help.png</file>
+        <file>res/G_help.png</file>
+        <file>res/game_card.png</file>
+        <file>res/H_help.png</file>
+        <file>res/I_help.png</file>
+        <file>res/J_help.png</file>
+        <file>res/K_help.png</file>
+        <file>res/main_button.png</file>
     </qresource>
 </RCC>

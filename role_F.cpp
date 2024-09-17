@@ -33,7 +33,6 @@ void role_F::UpdateState(Game &game)
     if(this->state==3){
         if(!this->timer_skillcd.isActive())
         {
-            qDebug()<<"line 34";
             if(this->skill_open==false)SkillBegin(game);
             this->AttackObject(&game);
             if(!this->Attack_list.empty())this->state=2;

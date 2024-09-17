@@ -68,7 +68,7 @@ void Role_I::Attack(Game *game){
         this->timer_attacking.setSingleShot(true);
         for (auto object:Attack_list){
             if(object==nullptr)continue;
-            myBullet*temp=new myBullet(this->name,this->posi*Cell_Size+Left_Width+40,object->posj,this->attack_power);
+            myBullet*temp=new myBullet(this->name,this->posi*Cell_Size+Left_Width-20,object->posj*Cell_Size+Up_Height,this->attack_power);
             if(temp!=NULL)object->Bullets.push_back(temp);
         }
     }

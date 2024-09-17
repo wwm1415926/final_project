@@ -92,5 +92,6 @@
         <file>res/J_help.png</file>
         <file>res/K_help.png</file>
         <file>res/main_button.png</file>
+        <file>res/game_buttom.png</file>
     </qresource>
 </RCC>

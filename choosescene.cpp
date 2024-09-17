@@ -7,7 +7,7 @@
 ChooseScene::ChooseScene(QWidget *parent)
     : QMainWindow{parent}
 {
-    this->setFixedSize(800,600);
+    this->setFixedSize(1200,720);
     this->setWindowTitle("选择关卡");
     second_game=false;
     QPushButton *backBtn=new QPushButton("Back",this);
@@ -62,7 +62,7 @@ void ChooseScene::paintEvent(QPaintEvent*)
 {
     QPainter painter(this);
     QImage background2(":/res/choose_background.png");
-    painter.drawImage(QRect(0, 0, 800, 600), background2);
+    painter.drawImage(QRect(0, 0,1200, 720), background2);
 
     QImage background1(":/res/choosescene.png");
     painter.drawImage(QRect(0, 0, 800, 100),background1);
@@ -77,8 +77,18 @@ void ChooseScene::paintEvent(QPaintEvent*)
         playScene->hide();
         this->show();
     });
+    connect(playScene,&PlayScene::First_failure,this,[=](){
+        disconnect(playScene, &PlayScene::First_failure, this, nullptr);
+        playScene->hide();
+        this->show();
+    });
     connect(playScene,&PlayScene::Second_success,this,[=](){
         disconnect(playScene, &PlayScene::Second_success, this, nullptr);
+        playScene->hide();
+        this->show();
+    });
+    connect(playScene,&PlayScene::Second_failure,this,[=](){
+        disconnect(playScene, &PlayScene::Second_failure, this, nullptr);
         playScene->hide();
         this->show();
     });

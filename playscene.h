@@ -100,6 +100,8 @@ signals:
     void gameBack();
     void First_success();
     void Second_success();
+    void First_failure();
+    void Second_failure();
 private slots:
 
     /*

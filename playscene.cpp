@@ -59,6 +59,13 @@ PlayScene::PlayScene(QWidget *parent)
     label2->setPixmap(pixmap1); // 设置QLabel的pixmap
     label2->move(0, 100); // 如果你需要确保QLabel也在父控件的(0,0)位置
     label2->show();
+    QPixmap pixmap2(":/res/game_buttom.png");
+    QLabel *label3 = new QLabel(this); // 这里的this是指向你的父控件或窗口的指针
+    label3->setFixedSize(1200,20);
+    label3->setParent(this);
+    label3->setPixmap(pixmap2); // 设置QLabel的pixmap
+    label3->move(0,1180); // 如果你需要确保QLabel也在父控件的(0,0)位置
+    label3->show();
 
 
 
@@ -97,7 +104,7 @@ PlayScene::PlayScene(QWidget *parent)
 void PlayScene::setupButtons(){
     QPixmap pixmap2(":/res/game_card.png");
     QLabel *label2 = new QLabel(this); // 这里的this是指向你的父控件或窗口的指针
-    label2->setFixedSize(572,100);
+    label2->setFixedSize(1200,100);
     label2->setParent(this);
     label2->setPixmap(pixmap2); // 设置QLabel的pixmap
     label2->move(0, 0); // 如果你需要确保QLabel也在父控件的(0,0)位置
@@ -354,7 +361,7 @@ void PlayScene::setupText(){
     QString text2="Money:";
     painter4.drawText(30,660, text2+QString::number(game.money));
     painter4.drawText(30,this->height()-20,QString("Round")+QString::number(game.round));
-    if (game.batch==0) {
+    if (game.enemy_timer.remainingTime()>=190000&&game.enemy_timer.remainingTime()<=200000) {
         painter4.setFont(QFont("宋体", 30, QFont::Bold));
         painter4.setPen(Qt::red); // 设置字体颜色为红色
         painter4.drawText(300, 300, "The FIRST enemies are COMING!");
@@ -367,7 +374,7 @@ void PlayScene::setupText(){
     if (game.enemy_timer.remainingTime()>=100000&&game.enemy_timer.remainingTime()<=110000) {
         painter4.setFont(QFont("宋体", 30, QFont::Bold));
         painter4.setPen(Qt::red); // 设置字体颜色为红色
-        painter4.drawText(300, 300, "The  Third enemies are COMING!");
+        painter4.drawText(300, 300, "The Third enemies are COMING!");
     }
     if (game.enemy_timer.remainingTime()>=50000&&game.enemy_timer.remainingTime()<=60000) {
         painter4.setFont(QFont("宋体", 30, QFont::Bold));
@@ -580,6 +587,33 @@ void PlayScene::BeginUpdate()
                 if(money_timer==20){
                     money_timer=0;
                     game.money++;
+                }
+                if(!game.enemy_timer.isActive()&&game.game_begin==true){
+                    game.game_begin=false;
+                    if(game.round==1){
+                        QMessageBox::information(this, "游戏结束", "First Round SUCCESS！");
+                        emit First_success();
+                    }
+                    else{
+                        QMessageBox::information(this, "游戏结束", "Second Round SUCCESS！");
+                        emit Second_success();
+                    }
+                }
+                if(game.game_begin==true){
+                for(auto role:game.EnemyRoles){
+                    if(role!=nullptr&&role->posx<=40){
+                         game.game_begin=false;
+                        if(game.round==1){
+                            QMessageBox::information(this, "游戏结束", "First Round Fail！");
+                            emit First_failure();
+
+                        }
+                        else{
+                            QMessageBox::information(this, "游戏结束", "Second Round Fail！");
+                            emit Second_failure();
+                        }
+                    }
+                }
                 }
                 //这里是每隔一段时间就重绘地图和更新地图中传送带的运行
                 //重新绘制图片

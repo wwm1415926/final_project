@@ -101,6 +101,7 @@ public:
     int round;//当前关次
     int money;//当前部署点
     int game_spd;//游戏速度
+    bool game_begin;
     /*
      *int spd1;
      *int spd2;

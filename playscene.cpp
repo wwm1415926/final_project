@@ -102,7 +102,7 @@ PlayScene::PlayScene(QWidget *parent)
 
 //todo
 void PlayScene::setupButtons(){
-    QPixmap pixmap2(":/res/game_card.png");
+    QPixmap pixmap2(":/res/game_card.jpg");
     QLabel *label2 = new QLabel(this); // 这里的this是指向你的父控件或窗口的指针
     label2->setFixedSize(1200,100);
     label2->setParent(this);

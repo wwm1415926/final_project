@@ -93,5 +93,9 @@
         <file>res/K_help.png</file>
         <file>res/main_button.png</file>
         <file>res/game_buttom.png</file>
+        <file>res/game_card.jpg</file>
+        <file>res/help_A.png</file>
+        <file>res/help_C.png</file>
+        <file>res/toggle.png</file>
     </qresource>
 </RCC>

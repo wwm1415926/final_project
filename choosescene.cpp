@@ -11,17 +11,17 @@ ChooseScene::ChooseScene(QWidget *parent)
     this->setWindowTitle("选择关卡");
     second_game=false;
     QPushButton *backBtn=new QPushButton("Back",this);
-    backBtn->move(650,550);
+    backBtn->move(1100,680);
     MyPushButton *startBtn1=new MyPushButton;
     startBtn1->setParent(this);
-    startBtn1->setFixedSize(Button_Size, Button_Size);
+    startBtn1->setFixedSize(140,55);
     startBtn1->setStyleSheet("QPushButton{image: url(:/res/game1.png)}");
-    startBtn1->move(200,300);
+    startBtn1->move(345,420);
     MyPushButton *startBtn2=new MyPushButton;
     startBtn2->setParent(this);
-    startBtn2->setFixedSize(Button_Size, Button_Size);
+    startBtn2->setFixedSize(140,55);
     startBtn2->setStyleSheet("QPushButton{image: url(:/res/game2.png)}");
-    startBtn2->move(400,300);
+    startBtn2->move(695,215);
     qDebug("initial_playscene");
     playScene=new PlayScene;
     playScene->game.money=0;
@@ -65,7 +65,7 @@ void ChooseScene::paintEvent(QPaintEvent*)
     painter.drawImage(QRect(0, 0,1200, 720), background2);
 
     QImage background1(":/res/choosescene.png");
-    painter.drawImage(QRect(0, 0, 800, 100),background1);
+    painter.drawImage(QRect(0, 0, 1200, 100),background1);
     connect(playScene,&PlayScene::gameBack,this,[=](){
         playScene->hide();
         this->show();

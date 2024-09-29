@@ -18,7 +18,7 @@ void MyRole::be_attacked(){
         if(this->enemy){
             if(bullet->posx>=(this->posx-20)){
                 this->health-=bullet->attack_power;
-                bullet->is_attacking=false;
+                Bullets.removeAll(bullet);
 
             }
             else bullet->posx+=5;
@@ -26,7 +26,7 @@ void MyRole::be_attacked(){
         else{
             if(bullet->posx<=(this->posi*Cell_Size+Left_Width+20)){
                 this->health-=bullet->attack_power;
-                bullet->is_attacking=false;
+                Bullets.removeAll(bullet);
             }
             else bullet->posx-=5;
         }

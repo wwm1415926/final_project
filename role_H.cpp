@@ -32,7 +32,7 @@ Role_H::Role_H(int j, int i, bool enemy, int health, int attack_power, int attac
 
 void Role_H::UpdateState(Game &game)
 {
-
+    this->be_attacked();
     if(game.IsValid(GridVec(posi,posj))){
         posx-=spd;
         posi=(posx-Left_Width)/Cell_Size;
@@ -62,7 +62,7 @@ void Role_H::UpdateState(Game &game)
             this->AttackObject(&game);
             if(!this->Attack_list.empty())this->state = 2;
         }
-        this->be_attacked();
+
     }
     if (this->state == 2)
     {

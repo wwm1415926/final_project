@@ -16,7 +16,7 @@ PlayScene::PlayScene(QWidget *parent)
      *窗口参数初始化
      */
     this->setFixedSize(Play_Width,Play_Height);
-    this->setWindowTitle("xx大战xx");
+    this->setWindowTitle("明日大战方舟");
     QFont font;
     font.setFamily("华文新魏");
     font.setPointSize(23);
@@ -30,11 +30,7 @@ PlayScene::PlayScene(QWidget *parent)
     /*
      *音乐相关
      */
-    QProcess *musicProcess = new QProcess(this);
-    QString program = "cmd";
-    QStringList arguments;
-    QString musicFile = "D:/project_qt/final_project/music/game.mp3";
-    arguments << "/c" << "start" << "/min" << "wmplayer" << musicFile;
+    QMediaPlayer *musicPlayer = new QMediaPlayer(this);
 
     /*
      *游戏界面按钮槽函数
@@ -78,7 +74,11 @@ PlayScene::PlayScene(QWidget *parent)
         emit gameBack();
     });
     connect(SoundOnBtn, &QPushButton::clicked, this, [=]() {
-        musicProcess->start(program, arguments);
+        musicPlayer->setMedia(QUrl::fromLocalFile(":/res/music/bgm.wav")); // 设置音乐文件路径
+        musicPlayer->play(); // 开始播放音乐
+    });
+    connect(SaveBtn, &QPushButton::clicked, this, [=]() {
+        musicPlayer->stop();
     });
     connect(A_Btn,&QPushButton::clicked, this, [=]()
             {
@@ -109,6 +109,7 @@ void PlayScene::setupButtons(){
     label2->setPixmap(pixmap2); // 设置QLabel的pixmap
     label2->move(0, 0); // 如果你需要确保QLabel也在父控件的(0,0)位置
     label2->show();
+
     StoreBtn = new MyPushButton;
     StoreBtn->setParent(this);
     StoreBtn->setFixedSize(Button_Size/2, Button_Size/2);
@@ -244,7 +245,7 @@ void PlayScene::setupRoles(){
                 QString name = bullet->name;
                 QString path_item = ":/res/_bullet.png";
                 path_item.insert(6, name);
-                painter1.drawPixmap(role->posi*Cell_Size+Left_Width, role->posj*Cell_Size+Up_Height+10, (Cell_Size - 20)/2, (Cell_Size - 20) /5, path_item);
+                 painter1.drawPixmap(bullet->posx, bullet->posy + 40, (Cell_Size - 20)/2, (Cell_Size - 20) /5, path_item);
             }
 
             // 递增 i 以处理下一个角色
@@ -273,7 +274,7 @@ void PlayScene::setupRoles(){
 
         // 绘制生命条
         QPoint start1 = QPoint(role->posx+40, role->posy + 100);
-        QPoint end1 = QPoint(role->posx+40 + 0.025 * role->health, role->posy + 100);
+        QPoint end1 = QPoint((role->health>0?role->posx+40 + 0.025 * role->health:role->posx+40), role->posy + 100);//276
         painterline1.drawLine(start1, end1);
 
         // 处理角色的状态
@@ -283,6 +284,7 @@ void PlayScene::setupRoles(){
 
             // 从列表中移除角色并获取下一个元素的迭代器
             game.EnemyRoles.removeOne(role);
+            game.killed++;
             // 注意：在移除元素后，i 不递增，因为元素的数量减少了，当前的 i 可能会指向下一个元素
         } else {
             if (role->be_attacking) {
@@ -358,9 +360,41 @@ void PlayScene::setupText(){
     QPainter painter4(this);
     painter4.setFont(QFont("宋体",25, QFont::Bold));
     QString text1="Score:";
-    QString text2="Money:";
-    painter4.drawText(30,660, text2+QString::number(game.money));
-    painter4.drawText(30,this->height()-20,QString("Round")+QString::number(game.round));
+
+    QLabel *labeltext1 = new QLabel(QString::number(game.money), this);
+    labeltext1->setFixedSize(40,40);
+    labeltext1->setParent(this);
+    labeltext1->move(30,60);
+    QFont font = labeltext1->font();
+    font.setPointSize(25);
+    labeltext1->setFont(font);
+    labeltext1->setStyleSheet("QLabel { color: white; }");
+    labeltext1->raise();
+    labeltext1->show();
+    labeltext1->deleteLater();
+
+    QLabel *labeltext2 = new QLabel(QString::number(game.killed), this);
+    labeltext2->setFixedSize(50,50);
+    labeltext2->setParent(this);
+    labeltext2->move(770,0);
+    font.setPointSize(25);
+    labeltext2->setFont(font);
+    labeltext2->setStyleSheet("QLabel { color: white; }");
+    labeltext2->raise();
+    labeltext2->show();
+    labeltext2->deleteLater();
+
+    QLabel *labeltext3 = new QLabel(QString::number(game.round)+"/4", this);
+    labeltext3->setFixedSize(50,50);
+    labeltext3->setParent(this);
+    labeltext3->move(760,50);
+    font.setPointSize(20);
+    labeltext3->setFont(font);
+    labeltext3->setStyleSheet("QLabel { color: white; }");
+    labeltext3->raise();
+    labeltext3->show();
+    labeltext3->deleteLater();
+
     if (game.enemy_timer.remainingTime()>=190000&&game.enemy_timer.remainingTime()<=200000) {
         painter4.setFont(QFont("宋体", 30, QFont::Bold));
         painter4.setPen(Qt::red); // 设置字体颜色为红色
@@ -438,30 +472,60 @@ void PlayScene::mousePressEvent(QMouseEvent *event)
         if (SelectName!=nullptr&&game.IsValid(gridvec(SelectPos.i,SelectPos.j)))
         {//如果有待放置的
             qDebug("we have role to place");
-            if(SelectName=="A"&&game.money>=8){
-                SelectRole=new Role_A(SelectPos.i,SelectPos.j);
-                game.money-=8;
+            if(SelectName=="A"){
+                if(game.money>=8){SelectRole=new Role_A(SelectPos.i,SelectPos.j);game.money-=8;}
+                else{
+                    QPainter painter4(this);
+                    painter4.setFont(QFont("宋体", 30, QFont::Bold));
+                    painter4.setPen(Qt::red); // 设置字体颜色为红色
+                    painter4.drawText(300, 300, "Money NOT Enough!");
+                }
             }
-            if(SelectName=="B"&&game.money>=30){
-                game.money-=30;
-                SelectRole=new role_B(SelectPos.i,SelectPos.j);
+            if(SelectName=="B"){
+                if(game.money>=30){SelectRole=new role_B(SelectPos.i,SelectPos.j);game.money-=30;}
+                else{
+                    qDebug()<<"line 487";
+                    QPainter painter4(this);
+                    painter4.setFont(QFont("宋体", 30, QFont::Bold));
+                    painter4.setPen(Qt::red); // 设置字体颜色为红色
+                    painter4.drawText(300, 300, "Money NOT Enough!");
+                }
             }
-
-            if(SelectName=="C"&&game.money>=12){
-                game.money-=12;
-                SelectRole=new role_C(SelectPos.i,SelectPos.j);
+            if(SelectName=="C"){
+                if(game.money>=12){SelectRole=new role_C(SelectPos.i,SelectPos.j);game.money-=12;}
+                else{
+                    QPainter painter4(this);
+                    painter4.setFont(QFont("宋体", 30, QFont::Bold));
+                    painter4.setPen(Qt::red); // 设置字体颜色为红色
+                    painter4.drawText(300, 300, "Money NOT Enough!");
+                }
             }
-            if(SelectName=="D"&&game.money>=24){
-                game.money-=24;
-                SelectRole=new role_D(SelectPos.i,SelectPos.j);
+            if(SelectName=="D"){
+                if(game.money>=24){SelectRole=new role_D(SelectPos.i,SelectPos.j);game.money-=24;}
+                else{
+                    QPainter painter4(this);
+                    painter4.setFont(QFont("宋体", 30, QFont::Bold));
+                    painter4.setPen(Qt::red); // 设置字体颜色为红色
+                    painter4.drawText(300, 300, "Money NOT Enough!");
+                }
             }
-            if(SelectName=="E"&&game.money>=25){
-                game.money-=25;
-                SelectRole=new role_E(SelectPos.i,SelectPos.j);
+            if(SelectName=="E"){
+                if(game.money>=25){SelectRole=new role_E(SelectPos.i,SelectPos.j);game.money-=25;}
+                else{
+                    QPainter painter4(this);
+                    painter4.setFont(QFont("宋体", 30, QFont::Bold));
+                    painter4.setPen(Qt::red); // 设置字体颜色为红色
+                    painter4.drawText(300, 300, "Money NOT Enough!");
+                }
             }
-            if(SelectName=="F"&&game.money>=13){
-                game.money-=13;
-                SelectRole=new role_F(SelectPos.i,SelectPos.j);
+            if(SelectName=="F"){
+                if(game.money>=12){SelectRole=new role_F(SelectPos.i,SelectPos.j);game.money-=12;}
+                else{
+                    QPainter painter4(this);
+                    painter4.setFont(QFont("宋体", 30, QFont::Bold));
+                    painter4.setPen(Qt::red); // 设置字体颜色为红色
+                    painter4.drawText(300, 300, "Money NOT Enough!");
+                }
             }
 
             if(SelectRole){

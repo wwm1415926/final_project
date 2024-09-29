@@ -15,6 +15,7 @@ void Game::FirstGame(){
     enemy_timer.start(200000);
     enemy_timer.setSingleShot(true);
     this->batch=0;
+    this->killed=0;
 }
 void Game::SecondGame(){
 
@@ -22,6 +23,7 @@ void Game::SecondGame(){
     OurRoles.clear();
     this->round=2;
     this->money=40;
+    this->killed=0;
     game_begin=true;
     this->batch=0;
     enemy_timer.start(200000);

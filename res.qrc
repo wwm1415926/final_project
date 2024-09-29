@@ -86,7 +86,6 @@
         <file>res/F_6.png</file>
         <file>res/F_help.png</file>
         <file>res/G_help.png</file>
-        <file>res/game_card.png</file>
         <file>res/H_help.png</file>
         <file>res/I_help.png</file>
         <file>res/J_help.png</file>
@@ -97,5 +96,8 @@
         <file>res/help_A.png</file>
         <file>res/help_C.png</file>
         <file>res/toggle.png</file>
+        <file>res/A_1.webm</file>
+        <file>res/A_2.webm</file>
+        <file>res/A_3.webm</file>
     </qresource>
 </RCC>

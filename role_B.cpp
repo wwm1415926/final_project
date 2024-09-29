@@ -15,7 +15,7 @@ role_B::role_B(int i,int j,bool enemy,int health,int attack_power,int attack_int
 };
 
 void role_B::UpdateState(Game &game)
-{
+{ this->be_attacked();
 
     if(this->state==1)
     {
@@ -25,7 +25,7 @@ void role_B::UpdateState(Game &game)
             if(!this->Attack_list.empty())
                 this->state=2;
         }
-        this->be_attacked();
+
     }
     if(this->state==2){
         this->Attack(&game);
@@ -39,7 +39,7 @@ void role_B::UpdateState(Game &game)
             if(!this->Attack_list.empty())this->state=2;
         }
         if(!this->timer_skilling.isActive())SkillEnd();
-        this->be_attacked();
+
     }
 }
 

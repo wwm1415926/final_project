@@ -26,6 +26,7 @@ public:
     int health,cost;
     int spd;
     QString name;//名称
+
     int state;//工作状态,1表示初始，2表示攻击态，3表示技能态,
     QTimer timer_attackcd,timer_attacking,timer_skillcd,timer_skilling;
     QList<myBullet*>Bullets;
@@ -101,6 +102,7 @@ public:
     int round;//当前关次
     int money;//当前部署点
     int game_spd;//游戏速度
+     int killed;
     bool game_begin;
     /*
      *int spd1;
